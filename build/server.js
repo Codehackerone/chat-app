@@ -22,6 +22,9 @@ app.set("view engine", "ejs");
 io.on('connection', function (socket) {
     console.log("User connected");
 });
+app.get('/', function (req, res) {
+    res.render('index');
+});
 var port = Number(process.env.PORT);
 server.listen(port, function () {
     console.log("Chat-app running on port " + port + ".");

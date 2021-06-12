@@ -5,6 +5,7 @@
         "sourceMap": true
     },
     "include": [
+        "public",
         "server.ts"
     ],
     "exclude": [
