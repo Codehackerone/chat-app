@@ -1,0 +1,9 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "https://github.com/Codehackerone/chat-app.git",
+  "author": "Codehackerone <soumyajitdatta123@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
