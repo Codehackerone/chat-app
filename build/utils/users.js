@@ -15,7 +15,7 @@ exports.getCurrentUser = getCurrentUser;
 var userLeave = function (id) {
     var index = users.findIndex(function (user) { return user.id === id; });
     if (index !== -1) {
-        return users.splice(index, 1);
+        return users.splice(index, 1)[0];
     }
 };
 exports.userLeave = userLeave;

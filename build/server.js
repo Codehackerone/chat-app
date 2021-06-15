@@ -37,7 +37,10 @@ io.on("connection", function (socket) {
         io.to(user.room).emit('message', messages_1.formatMessage(user.username, msg));
     });
     socket.on('disconnect', function () {
-        io.emit('message', messages_1.formatMessage(botName, 'A user has left the chat'));
+        var user = users_1.userLeave(socket.id);
+        if (user) {
+            io.to(user.room).emit('message', messages_1.formatMessage(botName, user.username + " has left the chat"));
+        }
     });
 });
 app.get("/", function (req, res) {

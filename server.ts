@@ -5,7 +5,7 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import { formatMessage } from "./utils/messages";
-import { userJoin,getCurrentUser } from "./utils/users";
+import { userJoin,getCurrentUser, userLeave } from "./utils/users";
 
 
 config();
@@ -40,7 +40,11 @@ io.on("connection", (socket) => {
   })
 
   socket.on('disconnect',()=>{
-    io.emit('message',formatMessage(botName,'A user has left the chat'));
+  const user:any=userLeave(socket.id);
+
+  if(user){
+    io.to(user.room).emit('message',formatMessage(botName,`${user.username} has left the chat`));
+  }
   })
 });
 
