@@ -25,6 +25,9 @@ io.on("connection", function (socket) {
     socket.on('disconnect', function () {
         io.emit('message', 'A user has left the chat');
     });
+    socket.on('chatMessage', function (msg) {
+        io.emit('message', msg);
+    });
 });
 app.get("/", function (req, res) {
     res.render("index");
