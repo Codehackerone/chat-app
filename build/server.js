@@ -10,6 +10,7 @@ var cors_1 = __importDefault(require("cors"));
 var http_1 = __importDefault(require("http"));
 var socket_io_1 = require("socket.io");
 var messages_1 = require("./utils/messages");
+var users_1 = require("./utils/users");
 dotenv_1.config();
 var app = express_1["default"]();
 var server = http_1["default"].createServer(app);
@@ -24,11 +25,16 @@ app.set("view engine", "ejs");
 io.on("connection", function (socket) {
     socket.on('joinRoom', function (_a) {
         var username = _a.username, room = _a.room;
+        var user = users_1.userJoin(socket.id, username, room);
+        socket.join(user.room);
         socket.emit('message', messages_1.formatMessage(botName, 'Welcome to Chatversity!'));
-        socket.broadcast.emit('message', messages_1.formatMessage(botName, 'A user has joined the chat'));
+        socket.broadcast
+            .to(user.room)
+            .emit('message', messages_1.formatMessage(botName, user.username + " has joined the chat"));
     });
     socket.on('chatMessage', function (msg) {
-        io.emit('message', messages_1.formatMessage("USER", msg));
+        var user = users_1.getCurrentUser(socket.id);
+        io.to(user.room).emit('message', messages_1.formatMessage(user.username, msg));
     });
     socket.on('disconnect', function () {
         io.emit('message', messages_1.formatMessage(botName, 'A user has left the chat'));

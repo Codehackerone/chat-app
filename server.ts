@@ -5,6 +5,7 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import { formatMessage } from "./utils/messages";
+import { userJoin,getCurrentUser } from "./utils/users";
 
 
 config();
@@ -22,13 +23,20 @@ app.set("view engine", "ejs");
 
 io.on("connection", (socket) => {
   socket.on('joinRoom',({username,room})=>{
-      
+      const user=userJoin(socket.id,username,room)
+      socket.join(user.room);
+
       socket.emit('message',formatMessage(botName,'Welcome to Chatversity!'));
-      socket.broadcast.emit('message',formatMessage(botName,'A user has joined the chat'));
+
+      socket.broadcast
+        .to(user.room)
+        .emit('message',formatMessage(botName,`${user.username} has joined the chat`));
   });
 
   socket.on('chatMessage',(msg)=>{
-    io.emit('message',formatMessage("USER",msg));
+    const user=getCurrentUser(socket.id);
+
+    io.to(user.room).emit('message',formatMessage(user.username,msg));
   })
 
   socket.on('disconnect',()=>{
