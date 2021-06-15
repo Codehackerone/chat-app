@@ -5,6 +5,7 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 
+
 config();
 const app = express();
 const server = http.createServer(app);
@@ -12,6 +13,7 @@ const io = new Server(server);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(__dirname + "/views"));
@@ -26,8 +28,8 @@ app.get("/", (req: any, res: any) => {
 });
 
 app.get("/chat", (req: any, res: any) => {
-  var { username,room }=req.params;
-  res.render("chat",{ username,room });
+  var { username, room } = req.query; 
+  res.render("chat", { username, room });
 });
 
 const port = Number(process.env.PORT);
