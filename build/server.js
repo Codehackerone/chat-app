@@ -20,7 +20,11 @@ app.use(express_1["default"].static(path_1["default"].join(__dirname, "public"))
 app.use(express_1["default"].static(__dirname + "/views"));
 app.set("view engine", "ejs");
 io.on("connection", function (socket) {
-    console.log("User connected");
+    socket.emit('message', 'Welcome to chatversity!');
+    socket.broadcast.emit('message', 'A user has joined the chat');
+    socket.on('disconnect', function () {
+        io.emit('message', 'A user has left the chat');
+    });
 });
 app.get("/", function (req, res) {
     res.render("index");

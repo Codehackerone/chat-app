@@ -10,17 +10,21 @@ config();
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(__dirname + "/views"));
 app.set("view engine", "ejs");
 
 io.on("connection", (socket) => {
-  console.log("User connected");
+  socket.emit('message','Welcome to chatversity!');
+  socket.broadcast.emit('message','A user has joined the chat');
+
+  socket.on('disconnect',()=>{
+    io.emit('message','A user has left the chat');
+  })
 });
 
 app.get("/", (req: any, res: any) => {
