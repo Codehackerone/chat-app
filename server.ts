@@ -5,14 +5,18 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import { formatMessage } from "./utils/messages";
-import { userJoin,getCurrentUser, userLeave, getRoomUsers } from "./utils/users";
-
+import {
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers,
+} from "./utils/users";
 
 config();
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-const botName="Chatversity Bot";
+const botName = "Chatversity Bot";
 
 app.use(cors());
 app.use(express.json());
@@ -22,40 +26,46 @@ app.use(express.static(__dirname + "/views"));
 app.set("view engine", "ejs");
 
 io.on("connection", (socket) => {
-  socket.on('joinRoom',({username,room})=>{
-      const user=userJoin(socket.id,username,room)
-      socket.join(user.room);
+  socket.on("joinRoom", ({ username, room }) => {
+    const user = userJoin(socket.id, username, room);
+    socket.join(user.room);
 
-      socket.emit('message',formatMessage(botName,'Welcome to Chatversity!'));
+    socket.emit("message", formatMessage(botName, "Welcome to Chatversity!"));
 
-      socket.broadcast
-        .to(user.room)
-        .emit('message',formatMessage(botName,`${user.username} has joined the chat`));
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        "message",
+        formatMessage(botName, `${user.username} has joined the chat`)
+      );
 
-      io.to(user.room).emit('roomUsers',{
-        room:user.room,
-        users:getRoomUsers(user.room),
-      })
+    io.to(user.room).emit("roomUsers", {
+      room: user.room,
+      users: getRoomUsers(user.room),
+    });
   });
 
-  socket.on('chatMessage',(msg)=>{
-    const user=getCurrentUser(socket.id);
+  socket.on("chatMessage", (msg) => {
+    const user = getCurrentUser(socket.id);
 
-    io.to(user.room).emit('message',formatMessage(user.username,msg));
-  })
+    io.to(user.room).emit("message", formatMessage(user.username, msg));
+  });
 
-  socket.on('disconnect',()=>{
-  const user:any=userLeave(socket.id);
+  socket.on("disconnect", () => {
+    const user: any = userLeave(socket.id);
 
-  if(user){
-    io.to(user.room).emit('message',formatMessage(botName,`${user.username} has left the chat`));
+    if (user) {
+      io.to(user.room).emit(
+        "message",
+        formatMessage(botName, `${user.username} has left the chat`)
+      );
 
-      io.to(user.room).emit('roomUsers',{
-        room:user.room,
-        users:getRoomUsers(user.room),
-      })
-  }
-  })
+      io.to(user.room).emit("roomUsers", {
+        room: user.room,
+        users: getRoomUsers(user.room),
+      });
+    }
+  });
 });
 
 app.get("/", (req: any, res: any) => {
@@ -63,7 +73,7 @@ app.get("/", (req: any, res: any) => {
 });
 
 app.get("/chat", (req: any, res: any) => {
-  var { username, room } = req.query; 
+  var { username, room } = req.query;
   res.render("chat", { username, room });
 });
 
