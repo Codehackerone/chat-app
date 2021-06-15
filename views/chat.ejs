@@ -18,7 +18,7 @@
         <main class="chat-main">
             <div class="chat-sidebar">
                 <h3><i class="fas fa-comments"></i> Room Name:</h3>
-                <h2 id="room-name"><%=room%></h2>
+                <h2 id="room-name"></h2>
                 <h3><i class="fas fa-users"></i> Users</h3>
                 <ul id="users"></ul>
             </div>
@@ -233,12 +233,19 @@ a {
 <script>
 	const chatForm=document.getElementById('chat-form');
 	const chatMessages=document.querySelector('.chat-messages');
+	const roomName=document.getElementById('room-name');
+	const userList=document.getElementById('users');
 
 	const username='<%=username%>',room='<%=room%>';
 
 	const socket=io();
 
 	socket.emit('joinRoom',{username,room});
+
+	socket.on('roomUsers',({room,users})=>{
+		outputRoomName(room);
+		outputUsers(users);
+	});
 
 	socket.on('message',message=>{
 		console.log(message);
@@ -268,6 +275,16 @@ a {
 		</p>
 		`;
 		document.querySelector('.chat-messages').appendChild(div);
+	}
+
+	function outputRoomName(room){
+		roomName.innerText=room;
+	}
+
+	function outputUsers(users){
+		userList.innerHTML=`
+		${users.map(user=>`<li>${user.username}</li>`).join('')}
+		`
 	}
 
 </script>

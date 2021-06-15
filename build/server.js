@@ -31,6 +31,10 @@ io.on("connection", function (socket) {
         socket.broadcast
             .to(user.room)
             .emit('message', messages_1.formatMessage(botName, user.username + " has joined the chat"));
+        io.to(user.room).emit('roomUsers', {
+            room: user.room,
+            users: users_1.getRoomUsers(user.room)
+        });
     });
     socket.on('chatMessage', function (msg) {
         var user = users_1.getCurrentUser(socket.id);
@@ -40,6 +44,10 @@ io.on("connection", function (socket) {
         var user = users_1.userLeave(socket.id);
         if (user) {
             io.to(user.room).emit('message', messages_1.formatMessage(botName, user.username + " has left the chat"));
+            io.to(user.room).emit('roomUsers', {
+                room: user.room,
+                users: users_1.getRoomUsers(user.room)
+            });
         }
     });
 });
