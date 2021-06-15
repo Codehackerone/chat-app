@@ -16,14 +16,18 @@ var io = new socket_io_1.Server(server);
 app.use(cors_1["default"]());
 app.use(express_1["default"].json());
 app.use(express_1["default"].urlencoded({ extended: true }));
-app.use(express_1["default"].static(path_1["default"].join(__dirname, 'public')));
+app.use(express_1["default"].static(path_1["default"].join(__dirname, "public")));
 app.use(express_1["default"].static(__dirname + "/views"));
 app.set("view engine", "ejs");
-io.on('connection', function (socket) {
+io.on("connection", function (socket) {
     console.log("User connected");
 });
-app.get('/', function (req, res) {
-    res.render('index');
+app.get("/", function (req, res) {
+    res.render("index");
+});
+app.get("/chat", function (req, res) {
+    var _a = req.params, username = _a.username, room = _a.room;
+    res.render("chat", { username: username, room: room });
 });
 var port = Number(process.env.PORT);
 server.listen(port, function () {
