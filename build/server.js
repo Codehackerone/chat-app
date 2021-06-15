@@ -22,13 +22,16 @@ app.use(express_1["default"].static(path_1["default"].join(__dirname, "public"))
 app.use(express_1["default"].static(__dirname + "/views"));
 app.set("view engine", "ejs");
 io.on("connection", function (socket) {
-    socket.emit('message', messages_1.formatMessage(botName, 'Welcome to Chatversity!'));
-    socket.broadcast.emit('message', messages_1.formatMessage(botName, 'A user has joined the chat'));
-    socket.on('disconnect', function () {
-        io.emit('message', messages_1.formatMessage(botName, 'A user has left the chat'));
+    socket.on('joinRoom', function (_a) {
+        var username = _a.username, room = _a.room;
+        socket.emit('message', messages_1.formatMessage(botName, 'Welcome to Chatversity!'));
+        socket.broadcast.emit('message', messages_1.formatMessage(botName, 'A user has joined the chat'));
     });
     socket.on('chatMessage', function (msg) {
         io.emit('message', messages_1.formatMessage("USER", msg));
+    });
+    socket.on('disconnect', function () {
+        io.emit('message', messages_1.formatMessage(botName, 'A user has left the chat'));
     });
 });
 app.get("/", function (req, res) {
