@@ -4,12 +4,14 @@ import path from "path";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
+import { formatMessage } from "./utils/messages";
 
 
 config();
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
+const botName="Chatversity Bot";
 
 app.use(cors());
 app.use(express.json());
@@ -19,15 +21,16 @@ app.use(express.static(__dirname + "/views"));
 app.set("view engine", "ejs");
 
 io.on("connection", (socket) => {
-  socket.emit('message','Welcome to chatversity!');
-  socket.broadcast.emit('message','A user has joined the chat');
+  socket.emit('message',formatMessage(botName,'Welcome to Chatversity!'));
+
+  socket.broadcast.emit('message',formatMessage(botName,'A user has joined the chat'));
 
   socket.on('disconnect',()=>{
-    io.emit('message','A user has left the chat');
+    io.emit('message',formatMessage(botName,'A user has left the chat'));
   })
 
   socket.on('chatMessage',(msg)=>{
-    io.emit('message',msg);
+    io.emit('message',formatMessage("USER",msg));
   })
 });
 
