@@ -1,9 +1,8 @@
 import express from "express";
+import { signin } from "../controllers/user.controller";
 const Router=express.Router();
 
 Router.route('/signin')
-    .get(async(req,res)=>{
-        res.send('login here');
-    })
+    .get(signin);
 
 export default Router;
