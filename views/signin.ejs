@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="<%=process.env.GOOGLE_CLIENT_ID%>">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <title>Signin </title>
+</head>
+<body>
+    <br><br>
+    <center><h1>Signin with google</h1></center> 
+    <center><div class="g-signin2" data-onsuccess="onSignIn"></div></center>
+</body>
+</html>
+<script>
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId());
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+    }
+</script>
