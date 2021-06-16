@@ -1,6 +1,11 @@
 "use strict";
 exports.__esModule = true;
-exports.googleauth = exports.signin = void 0;
+exports.googleauth = exports.signin = exports.renderSignin = void 0;
+var redirectURI = "/users/googleauth";
+var renderSignin = function (req, res) {
+    res.render('signin');
+};
+exports.renderSignin = renderSignin;
 var signin = function (req, res) {
     res.send('Google Login');
 };

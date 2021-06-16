@@ -7,7 +7,7 @@ var express_1 = __importDefault(require("express"));
 var user_controller_1 = require("../controllers/user.controller");
 var Router = express_1["default"].Router();
 Router.route('/signin')
-    .get(user_controller_1.signin);
+    .get(user_controller_1.renderSignin);
 Router.route('/googleauth')
     .get(user_controller_1.googleauth);
 exports["default"] = Router;
