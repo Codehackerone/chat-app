@@ -20,13 +20,12 @@ const server = http.createServer(app);
 const io = new Server(server);
 const botName = "Chatversity Bot";
 
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/css',express.static("public/css"));
-app.use('/js',express.static("public/js"));
-app.use('/img',express.static("public/images"));
+app.use("/css", express.static("public/css"));
+app.use("/js", express.static("public/js"));
+app.use("/img", express.static("public/images"));
 
 app.set("view engine", "ejs");
 
@@ -82,12 +81,11 @@ app.get("/chat", (req: any, res: any) => {
   res.render("chat", { username, room });
 });
 
-app.use('/users',userRouter);
+app.use("/users", userRouter);
 
-app.all('*',(req,res)=>{
-  res.send('Sorry! Route not found')
-})
-
+app.all("*", (req, res) => {
+  res.send("Sorry! Route not found");
+});
 
 const port = Number(process.env.PORT);
 server.listen(port, () => {

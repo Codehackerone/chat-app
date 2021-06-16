@@ -4,6 +4,6 @@
     "esModuleInterop": true,
     "sourceMap": true
   },
-  "include": ["server.ts","public"],
+  "include": ["server.ts", "public"],
   "exclude": ["node_modules"]
 }
