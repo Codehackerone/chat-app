@@ -11,6 +11,7 @@ import {
   userLeave,
   getRoomUsers,
 } from "./utils/users";
+import userRouter from "./routes/users.route";
 
 config();
 const app = express();
@@ -68,14 +69,20 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/", (req: any, res: any) => {
-  res.render("index");
-});
+// app.get("/", (req: any, res: any) => {
+//   res.render("index");
+// });
 
-app.get("/chat", (req: any, res: any) => {
-  var { username, room } = req.query;
-  res.render("chat", { username, room });
-});
+// app.get("/chat", (req: any, res: any) => {
+//   var { username, room } = req.query;
+//   res.render("chat", { username, room });
+// });
+app.use('/users',userRouter);
+
+app.all('*',(req,res)=>{
+  res.send('Sorry! Route not found')
+})
+
 
 const port = Number(process.env.PORT);
 server.listen(port, () => {
