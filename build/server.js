@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var dotenv_1 = require("dotenv");
-var path_1 = __importDefault(require("path"));
 var cors_1 = __importDefault(require("cors"));
 var http_1 = __importDefault(require("http"));
 var socket_io_1 = require("socket.io");
@@ -20,8 +19,9 @@ var botName = "Chatversity Bot";
 app.use(cors_1["default"]());
 app.use(express_1["default"].json());
 app.use(express_1["default"].urlencoded({ extended: true }));
-app.use(express_1["default"].static(path_1["default"].join(__dirname, "public")));
-app.use(express_1["default"].static(__dirname + "/views"));
+app.use('/css', express_1["default"].static("public/css"));
+app.use('/js', express_1["default"].static("public/js"));
+app.use('/img', express_1["default"].static("public/images"));
 app.set("view engine", "ejs");
 io.on("connection", function (socket) {
     socket.on("joinRoom", function (_a) {
@@ -52,13 +52,13 @@ io.on("connection", function (socket) {
         }
     });
 });
-// app.get("/", (req: any, res: any) => {
-//   res.render("index");
-// });
-// app.get("/chat", (req: any, res: any) => {
-//   var { username, room } = req.query;
-//   res.render("chat", { username, room });
-// });
+app.get("/", function (req, res) {
+    res.render("index");
+});
+app.get("/chat", function (req, res) {
+    var _a = req.query, username = _a.username, room = _a.room;
+    res.render("chat", { username: username, room: room });
+});
 app.use('/users', users_route_1["default"]);
 app.all('*', function (req, res) {
     res.send('Sorry! Route not found');

@@ -1,6 +1,7 @@
 import express from "express";
 import { config } from "dotenv";
-import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
@@ -19,11 +20,14 @@ const server = http.createServer(app);
 const io = new Server(server);
 const botName = "Chatversity Bot";
 
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(__dirname + "/views"));
+app.use('/css',express.static("public/css"));
+app.use('/js',express.static("public/js"));
+app.use('/img',express.static("public/images"));
+
 app.set("view engine", "ejs");
 
 io.on("connection", (socket) => {
@@ -69,14 +73,15 @@ io.on("connection", (socket) => {
   });
 });
 
-// app.get("/", (req: any, res: any) => {
-//   res.render("index");
-// });
+app.get("/", (req: any, res: any) => {
+  res.render("index");
+});
 
-// app.get("/chat", (req: any, res: any) => {
-//   var { username, room } = req.query;
-//   res.render("chat", { username, room });
-// });
+app.get("/chat", (req: any, res: any) => {
+  var { username, room } = req.query;
+  res.render("chat", { username, room });
+});
+
 app.use('/users',userRouter);
 
 app.all('*',(req,res)=>{
