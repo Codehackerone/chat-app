@@ -9,7 +9,7 @@ function onSignIn(googleUser) {
   xhr.onload = function() {
       if(xhr.responseText == 'success'){
         signOut();
-        location.assign('/profile');
+        location.assign('/users/profile');
       }
   };
   xhr.send(JSON.stringify({token : id_token}));

@@ -36,49 +36,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.profile = exports.googleauth = exports.signin = exports.renderSignin = void 0;
-var redirectURI = "/users/googleauth";
+exports.authorize = void 0;
 var verifyUser_1 = require("../utils/verifyUser");
-var renderSignin = function (req, res) {
-    res.render("signin");
+var authorize = function () {
+    return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+        var token, user, err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    token = req.cookies['session-token'];
+                    return [4 /*yield*/, verifyUser_1.verify(token)];
+                case 1:
+                    user = _a.sent();
+                    req.user = user;
+                    next();
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_1 = _a.sent();
+                    console.log(err_1);
+                    res.send("Error: " + err_1);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    }); };
 };
-exports.renderSignin = renderSignin;
-var signin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var token, user, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                token = req.body.token;
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, verifyUser_1.verify(token)];
-            case 2:
-                user = _a.sent();
-                res.cookie('session-token', token);
-                res.send('success');
-                return [3 /*break*/, 4];
-            case 3:
-                err_1 = _a.sent();
-                console.log(err_1);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-exports.signin = signin;
-var googleauth = function (req, res) {
-    res.send("Google Login Success");
-};
-exports.googleauth = googleauth;
-var profile = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user;
-    return __generator(this, function (_a) {
-        user = req.user;
-        //res.render('profile', {user});
-        console.log(user);
-        return [2 /*return*/];
-    });
-}); };
-exports.profile = profile;
-//# sourceMappingURL=user.controller.js.map
+exports.authorize = authorize;
+//# sourceMappingURL=auth.middleware.js.map

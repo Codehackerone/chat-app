@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var dotenv_1 = require("dotenv");
+var cookie_parser_1 = __importDefault(require("cookie-parser"));
 var cors_1 = __importDefault(require("cors"));
 var http_1 = __importDefault(require("http"));
 var socket_io_1 = require("socket.io");
@@ -17,6 +18,7 @@ var server = http_1["default"].createServer(app);
 var io = new socket_io_1.Server(server);
 var botName = "Chatversity Bot";
 app.use(cors_1["default"]());
+app.use(cookie_parser_1["default"]());
 app.use(express_1["default"].json());
 app.use(express_1["default"].urlencoded({ extended: true }));
 app.use("/css", express_1["default"].static("public/css"));

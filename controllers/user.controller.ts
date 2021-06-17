@@ -22,3 +22,10 @@ export const signin = async(req: any, res: any) => {
 export const googleauth = (req: any, res: any) => {
   res.send("Google Login Success");
 };
+
+export const profile=async(req:any, res:any)=>{
+  let user = req.user;
+  //res.render('profile', {user});
+  console.log(user);
+  
+}
