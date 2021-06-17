@@ -36,8 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.profile = exports.signin = exports.renderSignin = void 0;
-var redirectURI = "/users/googleauth";
+exports.signout = exports.profile = exports.signin = exports.renderSignin = void 0;
 var verifyUser_1 = require("../utils/verifyUser");
 var renderSignin = function (req, res) {
     res.render("signin");
@@ -76,4 +75,12 @@ var profile = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
     });
 }); };
 exports.profile = profile;
+var signout = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        res.clearCookie('session-token');
+        res.redirect('/users/signin');
+        return [2 /*return*/];
+    });
+}); };
+exports.signout = signout;
 //# sourceMappingURL=user.controller.js.map

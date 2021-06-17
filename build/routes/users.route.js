@@ -10,5 +10,7 @@ var Router = express_1["default"].Router();
 Router.route("/signin").get(user_controller_1.renderSignin).post(user_controller_1.signin);
 Router.route('/profile')
     .get(auth_middleware_1.authorize(), user_controller_1.profile);
+Router.route('/signout')
+    .all(auth_middleware_1.authorize(), user_controller_1.signout);
 exports["default"] = Router;
 //# sourceMappingURL=users.route.js.map

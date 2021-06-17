@@ -22,3 +22,8 @@ export const profile=async(req:any, res:any)=>{
   let user = req.user;
   res.render('profile', {user});
 }
+
+export const signout=async(req:any,res:any)=>{
+  res.clearCookie('session-token');
+    res.redirect('/users/signin');
+}
