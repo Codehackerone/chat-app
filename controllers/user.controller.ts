@@ -6,14 +6,17 @@ export const renderSignin = (req: any, res: any) => {
 };
 
 
-export const signin = (req: any, res: any) => {
+export const signin = async(req: any, res: any) => {
   let token=req.body.token;
-  verify(token)
-    .then(()=>{
-      res.cookie('session-token',token);
-      res.send('success');
-    })
-    .catch(console.error);
+  try{
+    var user:any=await verify(token);
+    res.cookie('session-token',token);
+    res.send('success');
+  }
+  catch(err)
+  {
+    console.log(err);
+  }
 };
 
 export const googleauth = (req: any, res: any) => {

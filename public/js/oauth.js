@@ -2,11 +2,17 @@ function onFailure(error) {
   console.log(error);
 }
 function onSignIn(googleUser) {
-  var profile = googleUser.getBasicProfile();
-  console.log("ID: " + profile.getId());
-  console.log("Name: " + profile.getName());
-  console.log("Image URL: " + profile.getImageUrl());
-  console.log("Email: " + profile.getEmail());
+  var id_token = googleUser.getAuthResponse().id_token;
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/users/signin');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+      if(xhr.responseText == 'success'){
+        signOut();
+        location.assign('/profile');
+      }
+  };
+  xhr.send(JSON.stringify({token : id_token}));
 }
 function renderButton() {
   gapi.signin2.render('my-signin2', {
