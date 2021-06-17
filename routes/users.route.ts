@@ -11,10 +11,8 @@ const Router = express.Router();
 
 Router.route("/signin").get(renderSignin).post(signin);
 
-Router.route('/profile')
-  .get(authorize(), profile)
+Router.route("/profile").get(authorize(), profile);
 
-Router.route('/signout')  
-  .all(authorize(),signout)
+Router.route("/signout").all(authorize(), signout);
 
 export default Router;

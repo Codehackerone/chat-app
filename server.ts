@@ -1,6 +1,6 @@
 import express from "express";
 import { config } from "dotenv";
-import cookieParser from 'cookie-parser';
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
