@@ -8,7 +8,6 @@ var user_controller_1 = require("../controllers/user.controller");
 var auth_middleware_1 = require("../middlewares/auth.middleware");
 var Router = express_1["default"].Router();
 Router.route("/signin").get(user_controller_1.renderSignin).post(user_controller_1.signin);
-Router.route("/googleauth").get(user_controller_1.googleauth);
 Router.route('/profile')
     .get(auth_middleware_1.authorize(), user_controller_1.profile);
 exports["default"] = Router;

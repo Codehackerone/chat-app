@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  googleauth,
   profile,
   renderSignin,
   signin,
@@ -10,8 +9,6 @@ import { authorize } from "../middlewares/auth.middleware";
 const Router = express.Router();
 
 Router.route("/signin").get(renderSignin).post(signin);
-
-Router.route("/googleauth").get(googleauth);
 
 Router.route('/profile')
   .get(authorize(), profile)

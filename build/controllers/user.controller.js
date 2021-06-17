@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.profile = exports.googleauth = exports.signin = exports.renderSignin = void 0;
+exports.profile = exports.signin = exports.renderSignin = void 0;
 var redirectURI = "/users/googleauth";
 var verifyUser_1 = require("../utils/verifyUser");
 var renderSignin = function (req, res) {
@@ -67,16 +67,11 @@ var signin = function (req, res) { return __awaiter(void 0, void 0, void 0, func
     });
 }); };
 exports.signin = signin;
-var googleauth = function (req, res) {
-    res.send("Google Login Success");
-};
-exports.googleauth = googleauth;
 var profile = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user;
     return __generator(this, function (_a) {
         user = req.user;
-        //res.render('profile', {user});
-        console.log(user);
+        res.render('profile', { user: user });
         return [2 /*return*/];
     });
 }); };
