@@ -9,6 +9,7 @@ var cookie_parser_1 = __importDefault(require("cookie-parser"));
 var cors_1 = __importDefault(require("cors"));
 var http_1 = __importDefault(require("http"));
 var socket_io_1 = require("socket.io");
+var mongoose_1 = __importDefault(require("mongoose"));
 var messages_1 = require("./utils/messages");
 var users_1 = require("./utils/users");
 var users_route_1 = __importDefault(require("./routes/users.route"));
@@ -25,6 +26,19 @@ app.use("/css", express_1["default"].static("public/css"));
 app.use("/js", express_1["default"].static("public/js"));
 app.use("/img", express_1["default"].static("public/images"));
 app.set("view engine", "ejs");
+var uri = String(process.env.MONGO_URI);
+var connectOptions = {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+};
+mongoose_1["default"]
+    .connect(uri, connectOptions)
+    .then()["catch"](function (err) { return console.log('Error:' + err); });
+mongoose_1["default"].connection.once('open', function () {
+    return console.log('Connected to MongoDB successfully.');
+});
 io.on("connection", function (socket) {
     socket.on("joinRoom", function (_a) {
         var username = _a.username, room = _a.room;
@@ -67,6 +81,6 @@ app.all("*", function (req, res) {
 });
 var port = Number(process.env.PORT);
 server.listen(port, function () {
-    console.log("Chat-app running on port " + port + ".");
+    console.log("Chatversity running on port " + port + ".");
 });
 //# sourceMappingURL=server.js.map

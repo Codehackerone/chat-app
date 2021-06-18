@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
+import mongoose from "mongoose";
 import { formatMessage } from "./utils/messages";
 import {
   userJoin,
@@ -28,6 +29,24 @@ app.use("/js", express.static("public/js"));
 app.use("/img", express.static("public/images"));
 
 app.set("view engine", "ejs");
+
+const uri = String(process.env.MONGO_URI);
+const connectOptions = {
+    useNewUrlParser: true,
+    useCreateIndex: true, 
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+};
+
+mongoose
+  .connect(uri, connectOptions)
+  .then()
+  .catch((err) => console.log('Error:' + err));
+
+mongoose.connection.once('open', () =>
+    console.log('Connected to MongoDB successfully.')
+);
+
 
 io.on("connection", (socket) => {
   socket.on("joinRoom", ({ username, room }) => {
@@ -89,5 +108,5 @@ app.all("*", (req, res) => {
 
 const port = Number(process.env.PORT);
 server.listen(port, () => {
-  console.log(`Chat-app running on port ${port}.`);
+  console.log(`Chatversity running on port ${port}.`);
 });
