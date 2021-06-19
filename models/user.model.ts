@@ -24,19 +24,18 @@ const userSchema = new Schema(
             unique: true,
         },
         address: {
-            city: String,
-            state: String,
-            zip_code: String,
-            street_address: String,
+            type: String,
+            required: true
         },
         username: {
             type: String,
             unique: true,
+            required:true,
         },
         status: {
             type: String,
-            default: 'unverified',
-            enum:['verified','unverified','banned']
+            default: 'reg_incomplete',
+            enum:['verified','unverified','banned','reg_incomplete']
         },
     }
 )
