@@ -23,3 +23,9 @@ const extension = (joi) => ({
 });
 
 const Joi = BaseJoi.extend(extension);
+
+export const userSchema_base = Joi.object({
+    name: Joi.string().required(),
+    email: Joi.string().required(),
+    picture_url:Joi.string().required(),
+});
