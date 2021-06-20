@@ -1,4 +1,4 @@
-import { verify } from "../utils/verifyUser";
+import { verify } from "../helpers/verifyUser";
 
 export const authorize = () => {
   return async (req:any, res:any, next:any) => {

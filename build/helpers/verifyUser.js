@@ -36,30 +36,29 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.authorize = void 0;
-var verifyUser_1 = require("../helpers/verifyUser");
-var authorize = function () {
-    return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-        var token, user, err_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    token = req.cookies["session-token"];
-                    return [4 /*yield*/, verifyUser_1.verify(token)];
-                case 1:
-                    user = _a.sent();
-                    req.user = user;
-                    next();
-                    return [3 /*break*/, 3];
-                case 2:
-                    err_1 = _a.sent();
-                    res.redirect('/users/signin');
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
-            }
-        });
-    }); };
-};
-exports.authorize = authorize;
-//# sourceMappingURL=auth.middleware.js.map
+exports.verify = void 0;
+var google_auth_library_1 = require("google-auth-library");
+var client = new google_auth_library_1.OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+var verify = function (token) { return __awaiter(void 0, void 0, void 0, function () {
+    var ticket, payload, user;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, client.verifyIdToken({
+                    idToken: token,
+                    audience: process.env.GOOGLE_CLIENT_ID
+                })];
+            case 1:
+                ticket = _a.sent();
+                payload = ticket.getPayload();
+                user = {
+                    id: payload.sub,
+                    name: payload.name,
+                    email: payload.email,
+                    picture: payload.picture
+                };
+                return [2 /*return*/, user];
+        }
+    });
+}); };
+exports.verify = verify;
+//# sourceMappingURL=verifyUser.js.map

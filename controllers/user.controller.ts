@@ -1,4 +1,4 @@
-import { verify } from "../utils/verifyUser";
+import { verify } from "../helpers/verifyUser";
 
 export const renderSignin = (req: any, res: any) => {
   res.render("users/signin");

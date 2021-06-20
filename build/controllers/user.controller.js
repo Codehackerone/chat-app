@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.signout = exports.profile = exports.signin = exports.renderSignin = void 0;
-var verifyUser_1 = require("../utils/verifyUser");
+var verifyUser_1 = require("../helpers/verifyUser");
 var renderSignin = function (req, res) {
     res.render("users/signin");
 };
