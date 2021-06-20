@@ -54,8 +54,7 @@ var authorize = function () {
                     return [3 /*break*/, 3];
                 case 2:
                     err_1 = _a.sent();
-                    console.log(err_1);
-                    res.send("Error: " + err_1);
+                    res.redirect('/users/signin');
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }

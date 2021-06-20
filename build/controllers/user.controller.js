@@ -39,7 +39,7 @@ exports.__esModule = true;
 exports.signout = exports.profile = exports.signin = exports.renderSignin = void 0;
 var verifyUser_1 = require("../utils/verifyUser");
 var renderSignin = function (req, res) {
-    res.render("signin");
+    res.render("users/signin");
 };
 exports.renderSignin = renderSignin;
 var signin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -70,7 +70,7 @@ var profile = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
     var user;
     return __generator(this, function (_a) {
         user = req.user;
-        res.render("profile", { user: user });
+        res.render("users/profile", { user: user });
         return [2 /*return*/];
     });
 }); };

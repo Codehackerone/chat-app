@@ -1,7 +1,7 @@
 import { verify } from "../utils/verifyUser";
 
 export const renderSignin = (req: any, res: any) => {
-  res.render("signin");
+  res.render("users/signin");
 };
 
 export const signin = async (req: any, res: any) => {
@@ -17,7 +17,7 @@ export const signin = async (req: any, res: any) => {
 
 export const profile = async (req: any, res: any) => {
   let user = req.user;
-  res.render("profile", { user });
+  res.render("users/profile", { user });
 };
 
 export const signout = async (req: any, res: any) => {
