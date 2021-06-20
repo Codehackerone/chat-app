@@ -5,6 +5,8 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
+import session from "express-session";
+import flash from "express-flash";
 import { formatMessage } from "./utils/messages";
 import {
   userJoin,
@@ -15,6 +17,18 @@ import {
 import userRouter from "./routes/users.route";
 
 config();
+const secret=process.env.SESSION_SECRET;
+const sessionConfig = {
+    name: 'session',
+    secret:secret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
+};
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
@@ -24,6 +38,8 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session(sessionConfig));
+app.use(flash());
 app.use("/css", express.static("public/css"));
 app.use("/js", express.static("public/js"));
 app.use("/img", express.static("public/images"));

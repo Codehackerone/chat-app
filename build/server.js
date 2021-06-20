@@ -10,10 +10,24 @@ var cors_1 = __importDefault(require("cors"));
 var http_1 = __importDefault(require("http"));
 var socket_io_1 = require("socket.io");
 var mongoose_1 = __importDefault(require("mongoose"));
+var express_session_1 = __importDefault(require("express-session"));
+var express_flash_1 = __importDefault(require("express-flash"));
 var messages_1 = require("./utils/messages");
 var users_1 = require("./utils/users");
 var users_route_1 = __importDefault(require("./routes/users.route"));
 dotenv_1.config();
+var secret = process.env.SESSION_SECRET;
+var sessionConfig = {
+    name: 'session',
+    secret: secret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+};
 var app = express_1["default"]();
 var server = http_1["default"].createServer(app);
 var io = new socket_io_1.Server(server);
@@ -22,6 +36,8 @@ app.use(cors_1["default"]());
 app.use(cookie_parser_1["default"]());
 app.use(express_1["default"].json());
 app.use(express_1["default"].urlencoded({ extended: true }));
+app.use(express_session_1["default"](sessionConfig));
+app.use(express_flash_1["default"]());
 app.use("/css", express_1["default"].static("public/css"));
 app.use("/js", express_1["default"].static("public/js"));
 app.use("/img", express_1["default"].static("public/images"));
