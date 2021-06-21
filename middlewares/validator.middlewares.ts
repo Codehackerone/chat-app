@@ -5,10 +5,8 @@ export const validateUser = () => {
         const { error } = userSchema.validate(req.body);
         if (error) {
             const msg = error.details.map((el:any) => el.message).join(",");
-            throw {
-                type:"ValidationError",
-                msg:msg,
-            }
+            req.flash('err',msg);
+            res.redirect(req.originalUrl);
         } else {
             next();
         }

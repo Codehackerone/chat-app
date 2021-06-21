@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Details</title>
-</head>
+<%- include('../layouts/boilerplate') %>
 <body>
+<script>
+    </script>
     <h1>User Details</h1>
     <form action="/users/userdetails" method="POST">
-        <input type="text" name="phone" placeholder="Phone Number" required>
-        <input type="text" name="address" placeholder="Address" required>
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="date" name="phone" placeholder="Phone Number" required>
+        <input type="text" name="phone" placeholder="Phone Number" required><br>
+        <input type="text" name="address" placeholder="Address" required><br>
+        <input type="text" name="username" placeholder="Username" required><br>
+        <input type="date" name="phone" placeholder="Phone Number" required><br>
         <button type="submit">Submit</button>
     </form>
 </body>
-</html>

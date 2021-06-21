@@ -45,10 +45,8 @@ var validateUser = function () {
             error = schemas_1.userSchema.validate(req.body).error;
             if (error) {
                 msg = error.details.map(function (el) { return el.message; }).join(",");
-                throw {
-                    type: "ValidationError",
-                    msg: msg
-                };
+                req.flash('err', msg);
+                res.redirect(req.originalUrl);
             }
             else {
                 next();

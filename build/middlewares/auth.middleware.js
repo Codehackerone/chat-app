@@ -82,6 +82,8 @@ var authorize = function () {
                     return [3 /*break*/, 4];
                 case 3:
                     err_1 = _a.sent();
+                    req.flash('err', 'Session Expired! Please login Again');
+                    //console.log(err);
                     res.redirect('/users/signin');
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];

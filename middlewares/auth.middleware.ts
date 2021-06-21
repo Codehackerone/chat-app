@@ -34,6 +34,8 @@ export const authorize = () => {
       req.body.user = gUser;
       next();
     } catch (err) {
+      req.flash('err','Session Expired! Please login Again');
+      //console.log(err);
       res.redirect('/users/signin');
     }
   };
