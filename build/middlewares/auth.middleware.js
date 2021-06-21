@@ -45,7 +45,7 @@ var authorize = function () {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    token = req.cookies["session-token"];
+                    token = req.cookies["x-session-token"];
                     return [4 /*yield*/, verifyUser_1.verify(token)];
                 case 1:
                     user = _a.sent();

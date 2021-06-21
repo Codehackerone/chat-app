@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.signout = exports.profile = exports.signin = exports.renderUserDetails = exports.renderSignin = void 0;
+exports.userDetails = exports.signout = exports.profile = exports.signin = exports.renderUserDetails = exports.renderSignin = void 0;
 var verifyUser_1 = require("../helpers/verifyUser");
 var user_service_1 = require("../services/user.service");
 var options = {
@@ -68,7 +68,7 @@ var signin = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [4 /*yield*/, user_service_1.checkGoogleUser(user.id)];
             case 3:
                 gUser = _a.sent();
-                res.cookie("session-token", token, options);
+                res.cookie("x-session-token", token, options);
                 if (!!gUser) return [3 /*break*/, 5];
                 return [4 /*yield*/, user_service_1.addGoogleUser(user)];
             case 4:
@@ -105,10 +105,25 @@ var profile = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
 exports.profile = profile;
 var signout = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        res.clearCookie("session-token");
+        res.clearCookie("x-session-token");
         res.redirect("/users/signin");
         return [2 /*return*/];
     });
 }); };
 exports.signout = signout;
+var userDetails = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userId, user;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                userId = req.body.user._id;
+                return [4 /*yield*/, user_service_1.updateGoogleUser(req.body, userId)];
+            case 1:
+                user = _a.sent();
+                res.send(user);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.userDetails = userDetails;
 //# sourceMappingURL=user.controller.js.map

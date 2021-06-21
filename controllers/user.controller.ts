@@ -1,5 +1,5 @@
 import { verify } from "../helpers/verifyUser";
-import { addGoogleUser, checkGoogleUser } from "../services/user.service";
+import { addGoogleUser, checkGoogleUser, updateGoogleUser } from "../services/user.service";
 
 let options = {
     path: '/',
@@ -21,7 +21,7 @@ export const signin = async (req: any, res: any) => {
   try {
     let user: any = await verify(token);
     let gUser=await checkGoogleUser(user.id);
-    res.cookie("session-token", token,options);
+    res.cookie("x-session-token", token,options);
     if(!gUser){
       let new_gUser=await addGoogleUser(user);
       res.json({
@@ -46,6 +46,12 @@ export const profile = async (req: any, res: any) => {
 };
 
 export const signout = async (req: any, res: any) => {
-  res.clearCookie("session-token");
+  res.clearCookie("x-session-token");
   res.redirect("/users/signin");
 };
+
+export const userDetails=async(req:any,res:any)=>{
+  const userId=req.body.user._id;
+  let user=await updateGoogleUser(req.body,userId);
+  res.send(user);
+}

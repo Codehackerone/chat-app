@@ -5,6 +5,7 @@ import {
   renderUserDetails,
   signin,
   signout,
+  userDetails,
 } from "../controllers/user.controller";
 import { authorize } from "../middlewares/auth.middleware";
 
@@ -15,7 +16,8 @@ Router.route("/signin")
   .post(signin);
 
 Router.route("/userdetails")
-  .get(renderUserDetails);
+  .get(renderUserDetails)
+  .post(userDetails);
 
 Router.route("/profile").get(authorize(), profile);
 

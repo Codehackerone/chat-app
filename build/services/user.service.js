@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.addGoogleUser = exports.checkGoogleUser = void 0;
+exports.updateGoogleUser = exports.addGoogleUser = exports.checkGoogleUser = void 0;
 var user_model_1 = __importDefault(require("../models/user.model"));
 var checkGoogleUser = function (googleUserId) { return __awaiter(void 0, void 0, void 0, function () {
     var user;
@@ -65,4 +65,16 @@ var addGoogleUser = function (userBody) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.addGoogleUser = addGoogleUser;
+var updateGoogleUser = function (userBody, userId) { return __awaiter(void 0, void 0, void 0, function () {
+    var user;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, user_model_1["default"].findByIdAndUpdate(userId, userBody)];
+            case 1:
+                user = _a.sent();
+                return [2 /*return*/, user];
+        }
+    });
+}); };
+exports.updateGoogleUser = updateGoogleUser;
 //# sourceMappingURL=user.service.js.map
