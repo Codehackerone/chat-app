@@ -35,61 +35,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
-exports.signout = exports.profile = exports.signin = exports.renderSignin = void 0;
-var verifyUser_1 = require("../helpers/verifyUser");
-var user_service_1 = require("../services/user.service");
-var renderSignin = function (req, res) {
-    res.render("users/signin");
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.renderSignin = renderSignin;
-var signin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var token, user, gUser, err_1;
+exports.__esModule = true;
+exports.addGoogleUser = exports.checkGoogleUser = void 0;
+var user_model_1 = __importDefault(require("../models/user.model"));
+var checkGoogleUser = function (googleUserId) { return __awaiter(void 0, void 0, void 0, function () {
+    var user;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                token = req.body.token;
-                _a.label = 1;
+            case 0: return [4 /*yield*/, user_model_1["default"].findById(googleUserId)];
             case 1:
-                _a.trys.push([1, 4, , 5]);
-                return [4 /*yield*/, verifyUser_1.verify(token)];
-            case 2:
                 user = _a.sent();
-                return [4 /*yield*/, user_service_1.checkGoogleUser(user.id)];
-            case 3:
-                gUser = _a.sent();
-                if (!gUser) {
-                }
-                res.cookie("session-token", token);
-                res.json({
-                    type: 'success',
-                    redirectUrl: '/users/profile'
-                });
-                return [3 /*break*/, 5];
-            case 4:
-                err_1 = _a.sent();
-                console.log(err_1);
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+                return [2 /*return*/, user];
         }
     });
 }); };
-exports.signin = signin;
-var profile = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.checkGoogleUser = checkGoogleUser;
+var addGoogleUser = function (userBody) { return __awaiter(void 0, void 0, void 0, function () {
     var user;
     return __generator(this, function (_a) {
-        user = req.user;
-        res.render("users/profile", { user: user });
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, user_model_1["default"].create(userBody)];
+            case 1:
+                user = _a.sent();
+                return [2 /*return*/, user];
+        }
     });
 }); };
-exports.profile = profile;
-var signout = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        res.clearCookie("session-token");
-        res.redirect("/users/signin");
-        return [2 /*return*/];
-    });
-}); };
-exports.signout = signout;
-//# sourceMappingURL=user.controller.js.map
+exports.addGoogleUser = addGoogleUser;
+//# sourceMappingURL=user.service.js.map

@@ -1,4 +1,5 @@
 import { verify } from "../helpers/verifyUser";
+import { addGoogleUser, checkGoogleUser } from "../services/user.service";
 
 export const renderSignin = (req: any, res: any) => {
   res.render("users/signin");
@@ -7,9 +8,16 @@ export const renderSignin = (req: any, res: any) => {
 export const signin = async (req: any, res: any) => {
   let token = req.body.token;
   try {
-    var user: any = await verify(token);
+    let user: any = await verify(token);
+    let gUser=await checkGoogleUser(user.id);
+    if(!gUser){
+
+    }
     res.cookie("session-token", token);
-    res.send("success");
+    res.json({
+      type:'success',
+      redirectUrl:'/users/profile'
+    });
   } catch (err) {
     console.log(err);
   }

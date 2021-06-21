@@ -7,9 +7,9 @@ function onSignIn(googleUser) {
   xhr.open("POST", "/users/signin");
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onload = function () {
-    if (xhr.responseText == "success") {
+    if (JSON.parse(xhr.responseText).type === "success") {
       signOut();
-      location.assign("/users/profile");
+      location.assign(JSON.parse(xhr.responseText).redirectUrl);
     }
   };
   xhr.send(JSON.stringify({ token: id_token }));

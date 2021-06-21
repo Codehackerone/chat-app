@@ -5,7 +5,10 @@ export const validateUser_base = () => {
         const { error } = userSchema_base.validate(req.body);
         if (error) {
             const msg = error.details.map((el:any) => el.message).join(",");
-            res.send(msg);
+            throw {
+                type:"ValidationError",
+                msg:msg,
+            }
         } else {
             next();
         }
