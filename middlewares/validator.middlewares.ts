@@ -1,8 +1,8 @@
-import { userSchema_base } from "../helpers/schemas";
+import { userSchema } from "../helpers/schemas";
 
-export const validateUser_base = () => {
+export const validateUser = () => {
     return async (req:any, res:any, next:any) => {
-        const { error } = userSchema_base.validate(req.body);
+        const { error } = userSchema.validate(req.body);
         if (error) {
             const msg = error.details.map((el:any) => el.message).join(",");
             throw {
