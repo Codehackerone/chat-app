@@ -20,7 +20,7 @@ var userSchema = new mongoose_1.Schema({
         required: true
     },
     phone: {
-        type: Number
+        type: String
     },
     address: {
         type: String
@@ -28,6 +28,9 @@ var userSchema = new mongoose_1.Schema({
     username: {
         type: String,
         unique: true
+    },
+    dob: {
+        type: Date
     },
     status: {
         type: String,

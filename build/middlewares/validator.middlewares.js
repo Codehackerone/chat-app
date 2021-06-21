@@ -36,58 +36,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.authorize = void 0;
-var verifyUser_1 = require("../helpers/verifyUser");
-var user_service_1 = require("../services/user.service");
-var authorize = function () {
+exports.validateUser = void 0;
+var schemas_1 = require("../helpers/schemas");
+var validateUser = function () {
     return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-        var token, user, gUser, err_1;
+        var error, msg;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 3, , 4]);
-                    token = req.cookies["x-session-token"];
-                    if (!token) {
-                        res.send('Token Expired');
-                        return [2 /*return*/];
-                    }
-                    return [4 /*yield*/, verifyUser_1.verify(token)];
-                case 1:
-                    user = _a.sent();
-                    if (!user) {
-                        res.send('Cant Find User');
-                        return [2 /*return*/];
-                    }
-                    return [4 /*yield*/, user_service_1.checkGoogleUser(user._id)];
-                case 2:
-                    gUser = _a.sent();
-                    if (!gUser) {
-                        res.send('User not registered');
-                        return [2 /*return*/];
-                    }
-                    else if (gUser.status === 'reg_incomplete') {
-                        res.send('Registration Incomplete');
-                        return [2 /*return*/];
-                    }
-                    else if (gUser.status === 'unverified') {
-                        res.send('This application is in beta. Contact the developer to give you special access');
-                        return [2 /*return*/];
-                    }
-                    else if (gUser.status === 'banned') {
-                        res.send('You are banned!');
-                        return [2 /*return*/];
-                    }
-                    req.body.user = gUser;
-                    next();
-                    return [3 /*break*/, 4];
-                case 3:
-                    err_1 = _a.sent();
-                    res.redirect('/users/signin');
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+            error = schemas_1.userSchema.validate(req.body).error;
+            if (error) {
+                msg = error.details.map(function (el) { return el.message; }).join(",");
+                throw {
+                    type: "ValidationError",
+                    msg: msg
+                };
             }
+            else {
+                next();
+            }
+            return [2 /*return*/];
         });
     }); };
 };
-exports.authorize = authorize;
-//# sourceMappingURL=auth.middleware.js.map
+exports.validateUser = validateUser;
+//# sourceMappingURL=validator.middlewares.js.map

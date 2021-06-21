@@ -65,7 +65,7 @@ var signin = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [4 /*yield*/, verifyUser_1.verify(token)];
             case 2:
                 user = _a.sent();
-                return [4 /*yield*/, user_service_1.checkGoogleUser(user.id)];
+                return [4 /*yield*/, user_service_1.checkGoogleUser(user._id)];
             case 3:
                 gUser = _a.sent();
                 res.cookie("x-session-token", token, options);

@@ -20,7 +20,7 @@ export const signin = async (req: any, res: any) => {
   let token = req.body.token;
   try {
     let user: any = await verify(token);
-    let gUser=await checkGoogleUser(user.id);
+    let gUser=await checkGoogleUser(user._id);
     res.cookie("x-session-token", token,options);
     if(!gUser){
       let new_gUser=await addGoogleUser(user);
