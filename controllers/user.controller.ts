@@ -12,6 +12,10 @@ export const renderSignin = (req: any, res: any) => {
   res.render("users/signin");
 };
 
+export const renderUserDetails=(req: any, res: any) => {
+  res.render("users/signin");
+};
+
 export const signin = async (req: any, res: any) => {
   let token = req.body.token;
   try {
