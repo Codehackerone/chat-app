@@ -13,7 +13,7 @@ export const renderSignin = (req: any, res: any) => {
 };
 
 export const renderUserDetails=(req: any, res: any) => {
-  res.render("users/signin");
+  res.render("users/userdetails");
 };
 
 export const signin = async (req: any, res: any) => {
