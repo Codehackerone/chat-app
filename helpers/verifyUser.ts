@@ -8,10 +8,10 @@ export const verify = async (token: any) => {
   });
   const payload = ticket.getPayload();
   const user: object = {
-    id: payload.sub,
+    _id: payload.sub,
     name: payload.name,
     email: payload.email,
-    picture: payload.picture,
+    picture_url: payload.picture,
   };
   return user;
 };

@@ -4,8 +4,8 @@ import { addGoogleUser, checkGoogleUser } from "../services/user.service";
 let options = {
     path: '/',
     sameSite: true,
-    maxAge: 1000 * 60 * 60 * 24 * Number(process.env.EXPIRY), // would expire after 30 days
-    httpOnly: true, // The cookie only accessible by the web server
+    maxAge: 1000 * 60 * 60 * 24 * 30,
+    httpOnly: true,
 };
 
 export const renderSignin = (req: any, res: any) => {

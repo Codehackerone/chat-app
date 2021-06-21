@@ -17,20 +17,17 @@ const userSchema = new Schema(
         },
         picture_url: {
             type: String,
-            default: 'none',
+            required:true,
         },
         phone: {
             type: Number,
-            unique: true,
         },
         address: {
             type: String,
-            required: true
         },
         username: {
             type: String,
             unique: true,
-            required:true,
         },
         status: {
             type: String,

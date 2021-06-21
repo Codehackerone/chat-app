@@ -51,10 +51,10 @@ var verify = function (token) { return __awaiter(void 0, void 0, void 0, functio
                 ticket = _a.sent();
                 payload = ticket.getPayload();
                 user = {
-                    id: payload.sub,
+                    _id: payload.sub,
                     name: payload.name,
                     email: payload.email,
-                    picture: payload.picture
+                    picture_url: payload.picture
                 };
                 return [2 /*return*/, user];
         }

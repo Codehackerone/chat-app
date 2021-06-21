@@ -36,41 +36,60 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.signout = exports.profile = exports.signin = exports.renderSignin = void 0;
+exports.signout = exports.profile = exports.signin = exports.renderUserDetails = exports.renderSignin = void 0;
 var verifyUser_1 = require("../helpers/verifyUser");
 var user_service_1 = require("../services/user.service");
+var options = {
+    path: '/',
+    sameSite: true,
+    maxAge: 1000 * 60 * 60 * 24 * 30,
+    httpOnly: true
+};
 var renderSignin = function (req, res) {
     res.render("users/signin");
 };
 exports.renderSignin = renderSignin;
+var renderUserDetails = function (req, res) {
+    res.render("users/userdetails");
+};
+exports.renderUserDetails = renderUserDetails;
 var signin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var token, user, gUser, err_1;
+    var token, user, gUser, new_gUser, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 token = req.body.token;
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 4, , 5]);
+                _a.trys.push([1, 7, , 8]);
                 return [4 /*yield*/, verifyUser_1.verify(token)];
             case 2:
                 user = _a.sent();
                 return [4 /*yield*/, user_service_1.checkGoogleUser(user.id)];
             case 3:
                 gUser = _a.sent();
-                if (!gUser) {
-                }
-                res.cookie("session-token", token);
+                res.cookie("session-token", token, options);
+                if (!!gUser) return [3 /*break*/, 5];
+                return [4 /*yield*/, user_service_1.addGoogleUser(user)];
+            case 4:
+                new_gUser = _a.sent();
+                res.json({
+                    type: 'success',
+                    redirectUrl: '/users/userdetails'
+                });
+                return [3 /*break*/, 6];
+            case 5:
                 res.json({
                     type: 'success',
                     redirectUrl: '/users/profile'
                 });
-                return [3 /*break*/, 5];
-            case 4:
+                _a.label = 6;
+            case 6: return [3 /*break*/, 8];
+            case 7:
                 err_1 = _a.sent();
                 console.log(err_1);
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+                return [3 /*break*/, 8];
+            case 8: return [2 /*return*/];
         }
     });
 }); };

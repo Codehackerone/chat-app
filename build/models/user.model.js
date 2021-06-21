@@ -17,20 +17,17 @@ var userSchema = new mongoose_1.Schema({
     },
     picture_url: {
         type: String,
-        "default": 'none'
+        required: true
     },
     phone: {
-        type: Number,
-        unique: true
+        type: Number
     },
     address: {
-        type: String,
-        required: true
+        type: String
     },
     username: {
         type: String,
-        unique: true,
-        required: true
+        unique: true
     },
     status: {
         type: String,
