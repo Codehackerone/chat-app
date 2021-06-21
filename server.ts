@@ -41,6 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session(sessionConfig));
 app.use(flash());
 app.use("/css", express.static("public/css"));
+app.use("/build",express.static("public/build"));
 app.use("/js", express.static("public/js"));
 app.use("/img", express.static("public/images"));
 

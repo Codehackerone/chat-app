@@ -39,6 +39,7 @@ app.use(express_1["default"].urlencoded({ extended: true }));
 app.use(express_session_1["default"](sessionConfig));
 app.use(express_flash_1["default"]());
 app.use("/css", express_1["default"].static("public/css"));
+app.use("/build", express_1["default"].static("public/build"));
 app.use("/js", express_1["default"].static("public/js"));
 app.use("/img", express_1["default"].static("public/images"));
 app.set("view engine", "ejs");
