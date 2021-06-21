@@ -1,0 +1,32 @@
+<% if (locals.messages.err) { %>
+    <script>
+    iziToast.error({
+        title: 'Error!',
+        message: '<%=locals.messages.err%>',
+    });
+    </script>
+<% } %>
+<% if (locals.messages.success) { %>
+    <script>
+    iziToast.success({
+        title: 'Success',
+        message: '<%=locals.messages.success%>',
+    });
+    </script>
+<% } %>
+<% if (locals.messages.warning) { %>
+    <script>
+    iziToast.warning({
+        title: 'Warning',
+        message: '<%=locals.messages.warning%>',
+    });
+    </script>
+<% } %>
+<% if (locals.messages.info) { %>
+    <script>
+    iziToast.info({
+        title: 'Info',
+        message: '<%=locals.messages.info%>',
+    });
+    </script>
+<% } %>
