@@ -1,6 +1,13 @@
 import { verify } from "../helpers/verifyUser";
 import { addGoogleUser, checkGoogleUser } from "../services/user.service";
 
+let options = {
+    path: '/',
+    sameSite: true,
+    maxAge: 1000 * 60 * 60 * 24 * Number(process.env.EXPIRY), // would expire after 30 days
+    httpOnly: true, // The cookie only accessible by the web server
+};
+
 export const renderSignin = (req: any, res: any) => {
   res.render("users/signin");
 };
@@ -10,14 +17,20 @@ export const signin = async (req: any, res: any) => {
   try {
     let user: any = await verify(token);
     let gUser=await checkGoogleUser(user.id);
+    res.cookie("session-token", token,options);
     if(!gUser){
-
+      let new_gUser=await addGoogleUser(user);
+      res.json({
+        type:'success',
+        redirectUrl:'/users/userdetails'
+      });
     }
-    res.cookie("session-token", token);
-    res.json({
-      type:'success',
-      redirectUrl:'/users/profile'
-    });
+    else{
+      res.json({
+        type:'success',
+        redirectUrl:'/users/profile'
+      });
+    }
   } catch (err) {
     console.log(err);
   }
