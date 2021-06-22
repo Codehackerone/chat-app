@@ -42,6 +42,7 @@ var validateUser = function () {
     return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
         var error, msg;
         return __generator(this, function (_a) {
+            console.log(req.body);
             error = schemas_1.userSchema.validate(req.body).error;
             if (error) {
                 msg = error.details.map(function (el) { return el.message; }).join(",");

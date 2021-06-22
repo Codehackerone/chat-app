@@ -11,6 +11,8 @@ export const addGoogleUser=async(userBody)=>{
 }
 
 export const updateGoogleUser=async(userBody,userId)=>{
+    console.log(userBody);
+    
     let user=await Users.findByIdAndUpdate(userId,userBody);
     return user;
 }

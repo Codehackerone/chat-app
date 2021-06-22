@@ -22,13 +22,13 @@ export const authorize = () => {
         res.redirect('/users/signin');
         return;
       }
-      else if(gUser.status==='reg_incomplete'){
+      else if(gUser.status==='reg_incomplete' && req.url!=="/userdetails"){
         req.flash('err','Registration Incomplete. Please provide the details');
         res.redirect('/users/userdetails');
         return;
       }
       else if(gUser.status==='unverified'){
-        req.flash('alert','This application is in beta. Contact the developer to give you special access');
+        req.flash('warning','This application is in beta. Contact the developer to give you special access');
         res.redirect('/users/signin');
         return;
       }

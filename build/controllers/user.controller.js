@@ -117,6 +117,7 @@ var userDetails = function (req, res) { return __awaiter(void 0, void 0, void 0,
         switch (_a.label) {
             case 0:
                 userId = req.body.user._id;
+                req.body.status = "unverified";
                 return [4 /*yield*/, user_service_1.updateGoogleUser(req.body, userId)];
             case 1:
                 user = _a.sent();

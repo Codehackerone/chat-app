@@ -29,8 +29,9 @@ var extension = function (joi) { return ({
 var Joi = joi_1["default"].extend(extension);
 exports.userSchema = Joi.object({
     user: Joi.object(),
-    phone: Joi.number().required(),
+    phone: Joi.string().required().escapeHTML(),
     address: Joi.string().required().escapeHTML(),
-    username: Joi.string().required().escapeHTML()
+    username: Joi.string().required().escapeHTML(),
+    dob: Joi.date().required()
 });
 //# sourceMappingURL=schemas.js.map
