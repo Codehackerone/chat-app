@@ -3,5 +3,6 @@ import {} from "../services/chat.service";
 
 export const renderIndex=async(req:any,res:any)=>{
     let users=await allUsers();
-    res.render('chats/index',{users});
+    const currentUser=req.body.user;
+    res.render('chats/index',{users,currentUser});
 }
