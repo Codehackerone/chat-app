@@ -1,5 +1,10 @@
 import Users from "../models/user.model";
 
+export const allUsers=async()=>{
+  let users=await Users.find({});
+  return users;
+}
+
 export const checkGoogleUser = async (googleUserId) => {
   let user = await Users.findById(googleUserId);
   return user;
