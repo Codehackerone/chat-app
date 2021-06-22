@@ -39,54 +39,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.updateGoogleUser = exports.addGoogleUser = exports.checkGoogleUser = exports.allUsers = void 0;
-var user_model_1 = __importDefault(require("../models/user.model"));
-var allUsers = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var users;
+exports.createRoom = void 0;
+var room_model_1 = __importDefault(require("../models/room.model"));
+var createRoom = function (roomBody) { return __awaiter(void 0, void 0, void 0, function () {
+    var room;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user_model_1["default"].find({})];
+            case 0: return [4 /*yield*/, room_model_1["default"].create(roomBody)];
             case 1:
-                users = _a.sent();
-                return [2 /*return*/, users];
+                room = _a.sent();
+                return [2 /*return*/, room];
         }
     });
 }); };
-exports.allUsers = allUsers;
-var checkGoogleUser = function (googleUserId) { return __awaiter(void 0, void 0, void 0, function () {
-    var user;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, user_model_1["default"].findById(googleUserId)];
-            case 1:
-                user = _a.sent();
-                return [2 /*return*/, user];
-        }
-    });
-}); };
-exports.checkGoogleUser = checkGoogleUser;
-var addGoogleUser = function (userBody) { return __awaiter(void 0, void 0, void 0, function () {
-    var user;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, user_model_1["default"].create(userBody)];
-            case 1:
-                user = _a.sent();
-                return [2 /*return*/, user];
-        }
-    });
-}); };
-exports.addGoogleUser = addGoogleUser;
-var updateGoogleUser = function (userBody, userId) { return __awaiter(void 0, void 0, void 0, function () {
-    var user;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, user_model_1["default"].findByIdAndUpdate(userId, userBody)];
-            case 1:
-                user = _a.sent();
-                return [2 /*return*/, user];
-        }
-    });
-}); };
-exports.updateGoogleUser = updateGoogleUser;
-//# sourceMappingURL=user.service.js.map
+exports.createRoom = createRoom;
+//# sourceMappingURL=chat.service.js.map
