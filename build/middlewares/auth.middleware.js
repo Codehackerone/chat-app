@@ -48,33 +48,39 @@ var authorize = function () {
                     _a.trys.push([0, 3, , 4]);
                     token = req.cookies["x-session-token"];
                     if (!token) {
-                        res.send('Token Expired');
+                        req.flash('err', 'Token Expired');
+                        res.redirect('/users/signin');
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, verifyUser_1.verify(token)];
                 case 1:
                     user = _a.sent();
                     if (!user) {
-                        res.send('Cant Find User');
+                        req.flash('err', 'User Not Found. Please register again.');
+                        res.redirect('/users/signin');
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, user_service_1.checkGoogleUser(user._id)];
                 case 2:
                     gUser = _a.sent();
                     if (!gUser) {
-                        res.send('User not registered');
+                        req.flash('err', 'User not registered. Please register again.');
+                        res.redirect('/users/signin');
                         return [2 /*return*/];
                     }
                     else if (gUser.status === 'reg_incomplete') {
-                        res.send('Registration Incomplete');
+                        req.flash('err', 'Registration Incomplete. Please provide the details');
+                        res.redirect('/users/userdetails');
                         return [2 /*return*/];
                     }
                     else if (gUser.status === 'unverified') {
-                        res.send('This application is in beta. Contact the developer to give you special access');
+                        req.flash('alert', 'This application is in beta. Contact the developer to give you special access');
+                        res.redirect('/users/signin');
                         return [2 /*return*/];
                     }
                     else if (gUser.status === 'banned') {
-                        res.send('You are banned!');
+                        req.flash('alert', 'You are banned');
+                        res.redirect('/users/signin');
                         return [2 /*return*/];
                     }
                     req.body.user = gUser;
