@@ -10,11 +10,10 @@ function onSignIn(googleUser) {
     if (JSON.parse(xhr.responseText).type === "success") {
       signOut();
       location.assign(JSON.parse(xhr.responseText).redirectUrl);
-    }
-    else{    
+    } else {
       iziToast.error({
-          title: 'Error',
-          message: JSON.parse(xhr.responseText).msg,
+        title: "Error",
+        message: JSON.parse(xhr.responseText).msg,
       });
     }
   };

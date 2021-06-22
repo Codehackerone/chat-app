@@ -1,18 +1,22 @@
 import { verify } from "../helpers/verifyUser";
-import { addGoogleUser, checkGoogleUser, updateGoogleUser } from "../services/user.service";
+import {
+  addGoogleUser,
+  checkGoogleUser,
+  updateGoogleUser,
+} from "../services/user.service";
 
 let options = {
-    path: '/',
-    sameSite: true,
-    maxAge: 1000 * 60 * 60 * 24 * 30,
-    httpOnly: true,
+  path: "/",
+  sameSite: true,
+  maxAge: 1000 * 60 * 60 * 24 * 30,
+  httpOnly: true,
 };
 
 export const renderSignin = (req: any, res: any) => {
   res.render("users/signin");
 };
 
-export const renderUserDetails=(req: any, res: any) => {
+export const renderUserDetails = (req: any, res: any) => {
   res.render("users/userdetails");
 };
 
@@ -20,27 +24,26 @@ export const signin = async (req: any, res: any) => {
   let token = req.body.token;
   try {
     let user: any = await verify(token);
-    let gUser=await checkGoogleUser(user._id);
-    res.cookie("x-session-token", token,options);
-    if(!gUser){
-      let new_gUser=await addGoogleUser(user);
+    let gUser = await checkGoogleUser(user._id);
+    res.cookie("x-session-token", token, options);
+    if (!gUser) {
+      let new_gUser = await addGoogleUser(user);
       res.json({
-        type:'success',
-        redirectUrl:'/users/userdetails'
+        type: "success",
+        redirectUrl: "/users/userdetails",
       });
-    }
-    else{
+    } else {
       res.json({
-        type:'success',
-        redirectUrl:'/users/profile'
+        type: "success",
+        redirectUrl: "/users/profile",
       });
     }
   } catch (err) {
     console.log(err);
     res.json({
-        type:'error',
-        msg:'Server Error! Something bad must have happened.'
-      });
+      type: "error",
+      msg: "Server Error! Something bad must have happened.",
+    });
   }
 };
 
@@ -51,13 +54,13 @@ export const profile = async (req: any, res: any) => {
 
 export const signout = async (req: any, res: any) => {
   res.clearCookie("x-session-token");
-  req.flash('success','Successfully signed out.');
+  req.flash("success", "Successfully signed out.");
   res.redirect("/users/signin");
 };
 
-export const userDetails=async(req:any,res:any)=>{
-  const userId=req.body.user._id;
-  req.body.status="unverified";
-  let user=await updateGoogleUser(req.body,userId);
+export const userDetails = async (req: any, res: any) => {
+  const userId = req.body.user._id;
+  req.body.status = "unverified";
+  let user = await updateGoogleUser(req.body, userId);
   res.send(user);
-}
+};

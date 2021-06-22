@@ -17,18 +17,18 @@ import {
 import userRouter from "./routes/users.route";
 
 config();
-const secret=process.env.SESSION_SECRET;
+const secret = process.env.SESSION_SECRET;
 const sessionConfig = {
-    name: 'session',
-    secret:secret,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        httpOnly: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-        sameSite:true
-    },
+  name: "session",
+  secret: secret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    sameSite: true,
+  },
 };
 const app = express();
 const server = http.createServer(app);
@@ -42,7 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session(sessionConfig));
 app.use(flash());
 app.use("/css", express.static("public/css"));
-app.use("/build",express.static("public/build"));
+app.use("/build", express.static("public/build"));
 app.use("/js", express.static("public/js"));
 app.use("/img", express.static("public/images"));
 
@@ -50,21 +50,20 @@ app.set("view engine", "ejs");
 
 const uri = String(process.env.MONGO_URI);
 const connectOptions = {
-    useNewUrlParser: true,
-    useCreateIndex: true, 
-    useUnifiedTopology: true,
-    useFindAndModify: false,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
 };
 
 mongoose
   .connect(uri, connectOptions)
   .then()
-  .catch((err) => console.log('Error:' + err));
+  .catch((err) => console.log("Error:" + err));
 
-mongoose.connection.once('open', () =>
-    console.log('Connected to MongoDB successfully.')
+mongoose.connection.once("open", () =>
+  console.log("Connected to MongoDB successfully.")
 );
-
 
 io.on("connection", (socket) => {
   socket.on("joinRoom", ({ username, room }) => {

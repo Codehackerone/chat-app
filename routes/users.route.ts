@@ -12,13 +12,11 @@ import { validateUser } from "../middlewares/validator.middlewares";
 
 const Router = express.Router();
 
-Router.route("/signin")
-  .get(renderSignin)
-  .post(signin);
+Router.route("/signin").get(renderSignin).post(signin);
 
 Router.route("/userdetails")
   .get(renderUserDetails)
-  .post(authorize(),validateUser(),userDetails);
+  .post(authorize(), validateUser(), userDetails);
 
 Router.route("/profile").get(authorize(), profile);
 
