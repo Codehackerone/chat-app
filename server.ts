@@ -15,6 +15,7 @@ import {
   getRoomUsers,
 } from "./utils/users";
 import userRouter from "./routes/users.route";
+import chatRouter from "./routes/chat.route";
 
 config();
 const secret = process.env.SESSION_SECRET;
@@ -118,6 +119,8 @@ app.get("/chat", (req: any, res: any) => {
 });
 
 app.use("/users", userRouter);
+
+app.use("/chat",chatRouter);
 
 app.all("*", (req, res) => {
   res.send("Sorry! Route not found");
