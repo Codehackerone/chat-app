@@ -37,6 +37,10 @@ export const signin = async (req: any, res: any) => {
     }
   } catch (err) {
     console.log(err);
+    res.json({
+        type:'error',
+        msg:'Server Error! Something bad must have happened.'
+      });
   }
 };
 
@@ -47,6 +51,7 @@ export const profile = async (req: any, res: any) => {
 
 export const signout = async (req: any, res: any) => {
   res.clearCookie("x-session-token");
+  req.flash('success','Successfully signed out.');
   res.redirect("/users/signin");
 };
 

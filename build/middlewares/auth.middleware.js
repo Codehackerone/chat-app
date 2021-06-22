@@ -84,6 +84,8 @@ var authorize = function () {
                         return [2 /*return*/];
                     }
                     req.body.user = gUser;
+                    if (req.originalUrl === "/users/signin" && req.url === "/profile")
+                        req.flash('success', 'Signed in successfully.');
                     next();
                     return [3 /*break*/, 4];
                 case 3:

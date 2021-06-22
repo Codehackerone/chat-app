@@ -38,6 +38,7 @@ export const authorize = () => {
         return;
       }
       req.body.user = gUser;
+      if(req.originalUrl==="/users/signin"&&req.url==="/profile")req.flash('success','Signed in successfully.');
       next();
     } catch (err) {
       req.flash('err','Session Expired! Please login Again');

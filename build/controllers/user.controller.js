@@ -88,6 +88,10 @@ var signin = function (req, res) { return __awaiter(void 0, void 0, void 0, func
             case 7:
                 err_1 = _a.sent();
                 console.log(err_1);
+                res.json({
+                    type: 'error',
+                    msg: 'Server Error! Something bad must have happened.'
+                });
                 return [3 /*break*/, 8];
             case 8: return [2 /*return*/];
         }
@@ -106,6 +110,7 @@ exports.profile = profile;
 var signout = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         res.clearCookie("x-session-token");
+        req.flash('success', 'Successfully signed out.');
         res.redirect("/users/signin");
         return [2 /*return*/];
     });

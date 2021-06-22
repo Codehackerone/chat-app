@@ -69,9 +69,7 @@ var updateGoogleUser = function (userBody, userId) { return __awaiter(void 0, vo
     var user;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                console.log(userBody);
-                return [4 /*yield*/, user_model_1["default"].findByIdAndUpdate(userId, userBody)];
+            case 0: return [4 /*yield*/, user_model_1["default"].findByIdAndUpdate(userId, userBody)];
             case 1:
                 user = _a.sent();
                 return [2 /*return*/, user];

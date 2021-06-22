@@ -1,4 +1,4 @@
-import Users  from "../models/user.model";
+import Users from "../models/user.model";
 
 export const checkGoogleUser=async(googleUserId)=>{
     let user=await Users.findById(googleUserId);
@@ -11,8 +11,6 @@ export const addGoogleUser=async(userBody)=>{
 }
 
 export const updateGoogleUser=async(userBody,userId)=>{
-    console.log(userBody);
-    
     let user=await Users.findByIdAndUpdate(userId,userBody);
     return user;
 }

@@ -11,6 +11,12 @@ function onSignIn(googleUser) {
       signOut();
       location.assign(JSON.parse(xhr.responseText).redirectUrl);
     }
+    else{    
+      iziToast.error({
+          title: 'Error',
+          message: JSON.parse(xhr.responseText).msg,
+      });
+    }
   };
   xhr.send(JSON.stringify({ token: id_token }));
 }
