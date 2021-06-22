@@ -87,13 +87,13 @@ io.on("connection", function (socket) {
         }
     });
 });
-app.get("/", function (req, res) {
-    res.render("index");
-});
-app.get("/chat", function (req, res) {
-    var _a = req.query, username = _a.username, room = _a.room;
-    res.render("chat", { username: username, room: room });
-});
+// app.get("/", (req: any, res: any) => {
+//   res.render("index");
+// });
+// app.get("/chat", (req: any, res: any) => {
+//   var { username, room } = req.query;
+//   res.render("chat", { username, room });
+// });
 app.use("/users", users_route_1["default"]);
 app.use("/chat", chat_route_1["default"]);
 app.all("*", function (req, res) {

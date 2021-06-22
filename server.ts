@@ -109,14 +109,14 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/", (req: any, res: any) => {
-  res.render("index");
-});
+// app.get("/", (req: any, res: any) => {
+//   res.render("index");
+// });
 
-app.get("/chat", (req: any, res: any) => {
-  var { username, room } = req.query;
-  res.render("chat", { username, room });
-});
+// app.get("/chat", (req: any, res: any) => {
+//   var { username, room } = req.query;
+//   res.render("chat", { username, room });
+// });
 
 app.use("/users", userRouter);
 

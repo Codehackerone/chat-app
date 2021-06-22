@@ -48,7 +48,7 @@ export const signin = async (req: any, res: any) => {
 };
 
 export const profile = async (req: any, res: any) => {
-  let user = req.user;
+  let user = req.body.user;
   res.render("users/profile", { user });
 };
 

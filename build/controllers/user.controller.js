@@ -101,7 +101,7 @@ exports.signin = signin;
 var profile = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user;
     return __generator(this, function (_a) {
-        user = req.user;
+        user = req.body.user;
         res.render("users/profile", { user: user });
         return [2 /*return*/];
     });
