@@ -1,13 +1,30 @@
 <%- include('../layouts/boilerplate') %>
 <body>
-<script>
-    </script>
-    <h1>User Details</h1>
-    <form action="/users/userdetails" method="POST">
-        <input type="text" name="phone" placeholder="Phone Number" required><br>
-        <input type="text" name="address" placeholder="Address" required><br>
-        <input type="text" name="username" placeholder="Username" required><br>
-        <input type="date" name="dob" placeholder="Phone Number" required><br>
-        <button type="submit">Submit</button>
-    </form>
+    <p class="text-5xl text-center pt-6">User Details</p>
+    <div class="min-h-screen pt-20 px-10">
+        <div class="bg-white p-10 rounded-lg shadow md:w-3/4 mx-auto lg:w-1/2">
+            <form action="/users/userdetails" method="POST">
+                <div class="mb-5">
+                    <label for="username" class="block mb-2 font-bold text-gray-600">Username <span class="text-red-500">*</span></label>
+                    <input type="text" required id="username" name="username" placeholder="muskelon985" class="border border-gray-300 shadow p-3 w-full rounded">
+                </div>
+                <div class="mb-5">
+                    <label for="dob" class="block mb-2 font-bold text-gray-600">Date of Birth <span class="text-red-500">*</span></label>
+                    <input type="date" required id="dob" name="dob" placeholder="Elon Musk" class="border border-gray-300 shadow p-3 w-full rounded">
+                </div>
+                <div class="mb-5">
+                    <label for="address" class="block mb-2 font-bold text-gray-600">Address <span class="text-red-500">*</span></label>
+                    <input type="text" required id="address" name="address" placeholder="Seattle, California, USA" class="border border-gray-300 shadow p-3 w-full rounded">
+                </div>
+                <div class="mb-10">
+                    <label for="phone" class="block mb-2 font-bold text-gray-600">Phone Number <span class="text-red-500">*</span></label>
+                    <input type="text" required id="phone" name="phone" placeholder="+91 9876543210" class="border shadow p-3 w-full rounded">
+                </div>
+                <button type="submit" class="transition duration-500 ease-in-out block w-full bg-blue-500 hover:bg-blue-700 text-white font-bold p-4 rounded">Submit</button>
+            </form>
+    </div>
+    </div>
 </body>
+<!-- border-red-300 
+<p class="text-sm text-red-400 mt-2">Twitter user name required</p>
+-->
