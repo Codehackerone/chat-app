@@ -31,7 +31,7 @@ export const authorize = () => {
       } else if (gUser.status === "unverified") {
         req.flash(
           "warning",
-          "This application is in beta. Contact the developer to give you special access"
+          "This application is in beta. Contact the developer to give you special access. Email:soumyajitdatta123@gmail.com"
         );
         res.redirect("/users/signin");
         return;

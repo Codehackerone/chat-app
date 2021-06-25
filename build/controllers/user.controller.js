@@ -126,7 +126,7 @@ var userDetails = function (req, res) { return __awaiter(void 0, void 0, void 0,
                 return [4 /*yield*/, user_service_1.updateGoogleUser(req.body, userId)];
             case 1:
                 user = _a.sent();
-                res.send(user);
+                res.redirect('/users/profile');
                 return [2 /*return*/];
         }
     });

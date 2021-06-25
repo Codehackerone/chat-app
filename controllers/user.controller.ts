@@ -62,5 +62,5 @@ export const userDetails = async (req: any, res: any) => {
   const userId = req.body.user._id;
   req.body.status = "unverified";
   let user = await updateGoogleUser(req.body, userId);
-  res.send(user);
+  res.redirect('/users/profile');
 };

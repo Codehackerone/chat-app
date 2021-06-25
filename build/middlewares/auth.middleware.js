@@ -75,7 +75,7 @@ var authorize = function () {
                         return [2 /*return*/];
                     }
                     else if (gUser.status === "unverified") {
-                        req.flash("warning", "This application is in beta. Contact the developer to give you special access");
+                        req.flash("warning", "This application is in beta. Contact the developer to give you special access. Email:soumyajitdatta123@gmail.com");
                         res.redirect("/users/signin");
                         return [2 /*return*/];
                     }
