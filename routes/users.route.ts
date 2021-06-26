@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  checkUsername,
   profile,
   renderSignin,
   renderUserDetails,
@@ -21,5 +22,8 @@ Router.route("/userdetails")
 Router.route("/profile").get(authorize(), profile);
 
 Router.route("/signout").all(authorize(), signout);
+
+Router.route("/username")
+  .all(checkUsername);
 
 export default Router;

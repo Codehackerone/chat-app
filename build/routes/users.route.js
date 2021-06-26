@@ -14,5 +14,7 @@ Router.route("/userdetails")
     .post(auth_middleware_1.authorize(), validator_middlewares_1.validateUser(), user_controller_1.userDetails);
 Router.route("/profile").get(auth_middleware_1.authorize(), user_controller_1.profile);
 Router.route("/signout").all(auth_middleware_1.authorize(), user_controller_1.signout);
+Router.route("/username")
+    .all(user_controller_1.checkUsername);
 exports["default"] = Router;
 //# sourceMappingURL=users.route.js.map
