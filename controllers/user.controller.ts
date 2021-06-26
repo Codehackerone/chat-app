@@ -2,6 +2,7 @@ import { verify } from "../helpers/verifyUser";
 import {
   addGoogleUser,
   checkGoogleUser,
+  ifUsernameExist,
   updateGoogleUser,
 } from "../services/user.service";
 
@@ -70,3 +71,7 @@ export const userDetails = async (req: any, res: any) => {
     res.redirect("/users/signin");
   }
 };
+
+export const checkUsername=async(req:any,res:any)=>{
+  res.send((!req.query.username)?false:(await ifUsernameExist(req.query.username)));
+}

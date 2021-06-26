@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.userDetails = exports.signout = exports.profile = exports.signin = exports.renderUserDetails = exports.renderSignin = void 0;
+exports.checkUsername = exports.userDetails = exports.signout = exports.profile = exports.signin = exports.renderUserDetails = exports.renderSignin = void 0;
 var verifyUser_1 = require("../helpers/verifyUser");
 var user_service_1 = require("../services/user.service");
 var options = {
@@ -139,4 +139,24 @@ var userDetails = function (req, res) { return __awaiter(void 0, void 0, void 0,
     });
 }); };
 exports.userDetails = userDetails;
+var checkUsername = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, _b, _c;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
+            case 0:
+                _b = (_a = res).send;
+                if (!(!req.query.username)) return [3 /*break*/, 1];
+                _c = false;
+                return [3 /*break*/, 3];
+            case 1: return [4 /*yield*/, user_service_1.ifUsernameExist(req.query.username)];
+            case 2:
+                _c = (_d.sent());
+                _d.label = 3;
+            case 3:
+                _b.apply(_a, [_c]);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.checkUsername = checkUsername;
 //# sourceMappingURL=user.controller.js.map
