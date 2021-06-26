@@ -26,12 +26,20 @@ function checkphone() {
     let phoneformat = /^\d{10}$/;
     toggle_status('phone',(phone.match(phoneformat)?0:1))
     arr_err[0]=phone.match(phoneformat)?false:true;
+    checkerrors();
 }
 
 function checkdob(){
     let dob=document.querySelector('#dob').value;
     toggle_status('dob',((new Date().getFullYear()-new Date(dob).getFullYear())<15)?1:0);
     arr_err[1]=((new Date().getFullYear()-new Date(dob).getFullYear())<15)?true:false;
+    checkerrors();
+}
+
+function checkaddress(){
+    let address=document.querySelector('#address').value;
+    toggle_status('address',(address!=="")?0:1)
+    arr_err[2]=(address!=="")?false:true;
 }
 
 function checkerrors(){
