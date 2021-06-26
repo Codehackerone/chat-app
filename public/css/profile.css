@@ -1,13 +1,13 @@
 .tooltip {
-    top: -32px;
-    left: -6px;
+  top: -32px;
+  left: -6px;
 }
 
 .tooltip-bottom {
-    left: 0;
-    bottom: -8px;
+  left: 0;
+  bottom: -8px;
 }
 
 .verified:hover > .tooltip {
-    display: inline-block;
+  display: inline-block;
 }

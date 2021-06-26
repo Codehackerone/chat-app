@@ -60,18 +60,19 @@ export const signout = async (req: any, res: any) => {
 };
 
 export const userDetails = async (req: any, res: any) => {
-  try{
+  try {
     const userId = req.body.user._id;
     req.body.status = "unverified";
     let user = await updateGoogleUser(req.body, userId);
-    res.redirect('/users/profile');
-  }
-  catch(err){
+    res.redirect("/users/profile");
+  } catch (err) {
     req.flash("success", "Server Error.");
     res.redirect("/users/signin");
   }
 };
 
-export const checkUsername=async(req:any,res:any)=>{
-  res.send((!req.query.username)?false:(await ifUsernameExist(req.query.username)));
-}
+export const checkUsername = async (req: any, res: any) => {
+  res.send(
+    !req.query.username ? false : await ifUsernameExist(req.query.username)
+  );
+};

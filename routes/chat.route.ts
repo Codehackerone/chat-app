@@ -4,10 +4,8 @@ import { renderIndex } from "../controllers/chat.controller";
 
 const Router = express.Router();
 
-Router.route("/")
-    .get(authorize(),renderIndex);
+Router.route("/").get(authorize(), renderIndex);
 
-Router.route("/chat")
-    .get();
+Router.route("/chat").get();
 
 export default Router;

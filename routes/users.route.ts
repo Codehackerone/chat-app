@@ -23,7 +23,6 @@ Router.route("/profile").get(authorize(), profile);
 
 Router.route("/signout").all(authorize(), signout);
 
-Router.route("/username")
-  .all(checkUsername);
+Router.route("/username").all(checkUsername);
 
 export default Router;

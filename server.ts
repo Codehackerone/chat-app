@@ -120,7 +120,7 @@ io.on("connection", (socket) => {
 
 app.use("/users", userRouter);
 
-app.use("/chat",chatRouter);
+app.use("/chat", chatRouter);
 
 app.all("*", (req, res) => {
   res.send("Sorry! Route not found");
