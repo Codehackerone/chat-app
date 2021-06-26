@@ -7,7 +7,7 @@
             <form action="/users/userdetails" method="POST">
                 <div class="mb-5">
                     <label for="username" class="block mb-2 font-bold text-gray-600">Username <span class="text-red-500">*</span></label>
-                    <input type="text" required id="username" name="username" placeholder="muskelon985" class="border border-gray-300 shadow p-3 w-full rounded">
+                    <input type="text" onkeyup="checkusername();" required id="username" name="username" placeholder="muskelon985" class="border border-gray-300 shadow p-3 w-full rounded">
                     <p class="text-sm text-red-400 mt-2" hidden id="username-wrong">Username already taken</p>
                     <p class="text-sm text-green-400 mt-2" hidden id="username-correct">Looks Good!</p>
                 </div>

@@ -40,8 +40,28 @@ function checkaddress(){
     let address=document.querySelector('#address').value;
     toggle_status('address',(address!=="")?0:1)
     arr_err[2]=(address!=="")?false:true;
+    checkerrors();
 }
 
+function checkusername(){
+    let username=document.querySelector('#username').value;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = async function () {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText==="false") {
+                toggle_status('username',0);
+                arr_err[3]=false;
+            }
+            else if(this.responseText==="true"){
+                toggle_status('username',1);
+                arr_err[3]=true;
+            }
+            checkerrors();
+        }
+    };
+    xhttp.open('GET', '/users/username/?username='+ username, true);
+    xhttp.send();
+}
 function checkerrors(){
     document.getElementById('submit').disabled=(allEqual(arr_err) && !arr_err[0])?false:true;
 }
