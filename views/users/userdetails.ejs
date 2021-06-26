@@ -25,11 +25,13 @@
                 </div>
                 <div class="mb-10">
                     <label for="phone" class="block mb-2 font-bold text-gray-600">Phone Number <span class="text-red-500">*</span></label>
-                    <input type="text" required id="phone" name="phone" placeholder="9876543210" class="border border-gray-300 shadow p-3 w-full rounded">
-                    <p class="text-sm text-red-400 mt-2" hidden id="phone-correct">Please enter a valid phone number</p>
-                    <p class="text-sm text-green-400 mt-2" hidden id="phone-wrong">Looks Good!</p>
+                    <input type="text" required id="phone" name="phone" placeholder="9876543210" class="border border-gray-300 shadow p-3 w-full rounded"
+                    onkeyup="checkphone()">
+                    <p class="text-sm text-red-400 mt-2" hidden id="phone-wrong">Please enter a valid phone number</p>
+                    <p class="text-sm text-green-400 mt-2" hidden id="phone-correct">Looks Good!</p>
                 </div>
-                <button type="submit" id="submit" class="transition duration-500 ease-in-out block w-full bg-blue-500 hover:bg-blue-700 text-white font-bold p-4 rounded">Submit</button>
+                <button type="submit" id="submit" disabled
+                class="transition duration-500 ease-in-out block w-full bg-blue-500 hover:bg-blue-700 text-white font-bold p-4 rounded">Submit</button>
             </form>
     </div>
     </div>

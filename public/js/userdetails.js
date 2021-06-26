@@ -1,4 +1,5 @@
-let err1=true,err2=true,err3=true,err4=true;
+let arr_err=Array(4).fill(true);
+const allEqual = arr => arr.every( v => v === arr[0] )
 
 function toggle_status(id_element, change_to) {
     if (change_to == 0) {
@@ -23,11 +24,19 @@ function toggle_status(id_element, change_to) {
 function checkphone() {
     let phone = document.querySelector('#phone').value;
     let phoneformat = /^\d{10}$/;
-    if (phone.match(phoneformat)) {
-        toggle_status('phone-number', 0);
-    } else {
-        toggle_status('phone-number', 1);
-    }
+    toggle_status('phone',(phone.match(phoneformat)?0:1))
+    arr_err[0]=phone.match(phoneformat)?false:true;
 }
 
-toggle_status('username',0);
+function checkerrors(){
+    document.getElementById('submit').disabled=(allEqual(arr_err) && !arr_err[0])?false:true;
+}
+
+function checksubmit(){
+    if((allEqual(arr_err) && arr_err[0])|| !(allEqual(arr_err))){
+    iziToast.warning({
+        title: 'Warning',
+        message: 'Please fill up all the fields or correct the values',
+    });
+    }
+}
