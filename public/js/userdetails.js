@@ -28,6 +28,12 @@ function checkphone() {
     arr_err[0]=phone.match(phoneformat)?false:true;
 }
 
+function checkdob(){
+    let dob=document.querySelector('#dob').value;
+    toggle_status('dob',((new Date().getFullYear()-new Date(dob).getFullYear())<15)?1:0);
+    arr_err[1]=((new Date().getFullYear()-new Date(dob).getFullYear())<15)?true:false;
+}
+
 function checkerrors(){
     document.getElementById('submit').disabled=(allEqual(arr_err) && !arr_err[0])?false:true;
 }
