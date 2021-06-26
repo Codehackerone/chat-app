@@ -117,17 +117,24 @@ var signout = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
 }); };
 exports.signout = signout;
 var userDetails = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var userId, user;
+    var userId, user, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                _a.trys.push([0, 2, , 3]);
                 userId = req.body.user._id;
                 req.body.status = "unverified";
                 return [4 /*yield*/, user_service_1.updateGoogleUser(req.body, userId)];
             case 1:
                 user = _a.sent();
                 res.redirect('/users/profile');
-                return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 2:
+                err_2 = _a.sent();
+                req.flash("success", "Server Error.");
+                res.redirect("/users/signin");
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };

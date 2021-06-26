@@ -19,3 +19,8 @@ export const updateGoogleUser = async (userBody, userId) => {
   let user = await Users.findByIdAndUpdate(userId, userBody);
   return user;
 };
+
+export const ifUsernameExist=async(username)=>{
+  let user=await Users.findOne({username:username});
+  return (user)?true:false;
+}

@@ -59,8 +59,14 @@ export const signout = async (req: any, res: any) => {
 };
 
 export const userDetails = async (req: any, res: any) => {
-  const userId = req.body.user._id;
-  req.body.status = "unverified";
-  let user = await updateGoogleUser(req.body, userId);
-  res.redirect('/users/profile');
+  try{
+    const userId = req.body.user._id;
+    req.body.status = "unverified";
+    let user = await updateGoogleUser(req.body, userId);
+    res.redirect('/users/profile');
+  }
+  catch(err){
+    req.flash("success", "Server Error.");
+    res.redirect("/users/signin");
+  }
 };
