@@ -32,7 +32,7 @@
 						<label for="room">Room</label>
 						<select name="room" id="room">
 							<% for(let user of users) { if(user._id===currentUser._id)continue; %> 
-								<option value="<%=user._id%>"><%=user.name%></option>
+								<option value="<%=user._id%>"><%=user.username%></option>
 							<% } %> 
 						</select>
 					</div>

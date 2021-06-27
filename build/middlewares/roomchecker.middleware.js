@@ -36,20 +36,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.renderIndex = void 0;
-var user_service_1 = require("../services/user.service");
-var renderIndex = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users, currentUser;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, user_service_1.allUsers()];
-            case 1:
-                users = _a.sent();
-                currentUser = req.body.user;
-                res.render("chats/index", { users: users, currentUser: currentUser });
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.renderIndex = renderIndex;
-//# sourceMappingURL=chat.controller.js.map
+exports.checkRoom = void 0;
+var checkRoom = function () {
+    return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/];
+        });
+    }); };
+};
+exports.checkRoom = checkRoom;
+//# sourceMappingURL=roomchecker.middleware.js.map
