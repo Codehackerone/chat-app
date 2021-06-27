@@ -8,8 +8,9 @@ const Router = express.Router();
 Router.route("/").get(authorize(), renderIndex);
 
 Router.route("/chat")
-    .get(authorize(),checkRoom(),(req:any,res:any)=>{
+    .post(authorize(),checkRoom(),(req:any,res:any)=>{
         res.send('Hello!');
-    });
+    })
+    .get();
 
 export default Router;

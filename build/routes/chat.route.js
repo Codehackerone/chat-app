@@ -10,8 +10,9 @@ var roomchecker_middleware_1 = require("../middlewares/roomchecker.middleware");
 var Router = express_1["default"].Router();
 Router.route("/").get(auth_middleware_1.authorize(), chat_controller_1.renderIndex);
 Router.route("/chat")
-    .get(auth_middleware_1.authorize(), roomchecker_middleware_1.checkRoom(), function (req, res) {
+    .post(auth_middleware_1.authorize(), roomchecker_middleware_1.checkRoom(), function (req, res) {
     res.send('Hello!');
-});
+})
+    .get();
 exports["default"] = Router;
 //# sourceMappingURL=chat.route.js.map

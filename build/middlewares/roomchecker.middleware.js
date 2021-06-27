@@ -35,12 +35,43 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 exports.checkRoom = void 0;
+var room_model_1 = __importDefault(require("../models/room.model"));
+var user_model_1 = __importDefault(require("../models/user.model"));
 var checkRoom = function () {
     return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+        var usertochat, room, room_new;
         return __generator(this, function (_a) {
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, user_model_1["default"].findOne({ _id: req.body.usertochatId })];
+                case 1:
+                    usertochat = _a.sent();
+                    return [4 /*yield*/, room_model_1["default"].findOne({ type: 'dual', users: [usertochat._id, req.body.user._id] })];
+                case 2:
+                    room = _a.sent();
+                    if (!!room) return [3 /*break*/, 4];
+                    return [4 /*yield*/, room_model_1["default"].create({
+                            name: usertochat.name + " and " + req.body.user.name,
+                            type: 'dual',
+                            users: [
+                                usertochat._id,
+                                req.body.user._id
+                            ]
+                        })
+                        // TODO: redirect with room id
+                    ];
+                case 3:
+                    room_new = _a.sent();
+                    return [3 /*break*/, 5];
+                case 4:
+                    console.log('room exist');
+                    _a.label = 5;
+                case 5: return [2 /*return*/];
+            }
         });
     }); };
 };

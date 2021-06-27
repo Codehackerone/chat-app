@@ -2,10 +2,6 @@
 exports.__esModule = true;
 var mongoose_1 = require("mongoose");
 var roomSchema = new mongoose_1.Schema({
-    _id: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        required: true
-    },
     name: {
         type: String,
         required: true
@@ -16,7 +12,7 @@ var roomSchema = new mongoose_1.Schema({
     },
     users: [
         {
-            type: mongoose_1.Schema.Types.ObjectId,
+            type: String,
             ref: "User"
         },
     ]

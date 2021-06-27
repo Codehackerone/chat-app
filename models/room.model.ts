@@ -2,10 +2,6 @@ import { Schema, model } from "mongoose";
 
 const roomSchema = new Schema(
   {
-    _id: {
-      type: Schema.Types.ObjectId,
-      required: true,
-    },
     name: {
       type: String,
       required: true,
@@ -16,7 +12,7 @@ const roomSchema = new Schema(
     },
     users: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "User",
       },
     ],
