@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.renderIndex = void 0;
+exports.roomHandler = exports.renderIndex = void 0;
 var user_service_1 = require("../services/user.service");
 var renderIndex = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var users, currentUser;
@@ -52,4 +52,14 @@ var renderIndex = function (req, res) { return __awaiter(void 0, void 0, void 0,
     });
 }); };
 exports.renderIndex = renderIndex;
+var roomHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        if (req.body.room["new"]) {
+            req.flash('success', "Welcome to direct chatting with " + req.body.usertochat.username);
+        }
+        res.send('Chat begin!!');
+        return [2 /*return*/];
+    });
+}); };
+exports.roomHandler = roomHandler;
 //# sourceMappingURL=chat.controller.js.map

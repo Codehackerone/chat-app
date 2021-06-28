@@ -31,7 +31,7 @@ export const createOrFetchRoom = () => {
 
 export const roomChecker=()=>{
     return async (req: any, res: any, next: any) => {
-        try{
+        try{            
             if(!req.body.room){
                 req.flash('err','Room doesnt exist!');
                 res.redirect('/chat/');
