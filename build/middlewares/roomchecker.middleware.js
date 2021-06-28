@@ -39,16 +39,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.checkRoom = void 0;
+exports.roomChecker = exports.createOrFetchRoom = void 0;
 var room_model_1 = __importDefault(require("../models/room.model"));
 var user_model_1 = __importDefault(require("../models/user.model"));
-var checkRoom = function () {
+var createOrFetchRoom = function () {
     return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
         var usertochat, room, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 6, , 7]);
+                    _a.trys.push([0, 5, , 6]);
                     return [4 /*yield*/, user_model_1["default"].findOne({ _id: req.body.usertochatId })];
                 case 1:
                     usertochat = _a.sent();
@@ -66,23 +66,55 @@ var checkRoom = function () {
                         })];
                 case 3:
                     room = _a.sent();
-                    return [3 /*break*/, 5];
+                    room.type = "new";
+                    _a.label = 4;
                 case 4:
-                    console.log('room exist');
-                    _a.label = 5;
-                case 5:
                     req.body.room = room;
+                    req.body.usertochat = usertochat;
                     next();
-                    return [3 /*break*/, 7];
-                case 6:
+                    return [3 /*break*/, 6];
+                case 5:
                     err_1 = _a.sent();
                     req.flash('err', 'Something went wrong!');
                     res.redirect('/chat/');
-                    return [3 /*break*/, 7];
-                case 7: return [2 /*return*/];
+                    return [3 /*break*/, 6];
+                case 6: return [2 /*return*/];
             }
         });
     }); };
 };
-exports.checkRoom = checkRoom;
+exports.createOrFetchRoom = createOrFetchRoom;
+var roomChecker = function () {
+    return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+        var room, err_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    if (!req.body.room) {
+                        req.flash('err', 'Room doesnt exist!');
+                        res.redirect('/chat/');
+                        return [2 /*return*/];
+                    }
+                    return [4 /*yield*/, room_model_1["default"].findById(req.body.room._id)];
+                case 1:
+                    room = _a.sent();
+                    if (!room) {
+                        req.flash('err', 'Room doesnt exist!');
+                        res.redirect('/chat/');
+                        return [2 /*return*/];
+                    }
+                    next();
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_2 = _a.sent();
+                    req.flash('err', 'Room doesnt exist!');
+                    res.redirect('/chat/');
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    }); };
+};
+exports.roomChecker = roomChecker;
 //# sourceMappingURL=roomchecker.middleware.js.map
