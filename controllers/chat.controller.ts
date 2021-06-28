@@ -6,9 +6,12 @@ export const renderIndex = async (req: any, res: any) => {
   res.render("chats/index", { users, currentUser });
 };
 
-export const roomHandler=async(req:any,res:any)=>{
-  if(req.body.room.new){
-    req.flash('success',`Welcome to direct chatting with ${req.body.usertochat.username}`);
+export const roomHandler = async (req: any, res: any) => {
+  if (req.body.room.new) {
+    req.flash(
+      "success",
+      `Welcome to direct chatting with ${req.body.usertochat.username}`
+    );
   }
-  res.send('Chat begin!!');
-}
+  res.send("Chat begin!!");
+};
