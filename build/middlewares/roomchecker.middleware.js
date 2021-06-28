@@ -44,10 +44,12 @@ var room_model_1 = __importDefault(require("../models/room.model"));
 var user_model_1 = __importDefault(require("../models/user.model"));
 var checkRoom = function () {
     return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-        var usertochat, room, room_new;
+        var usertochat, room, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, user_model_1["default"].findOne({ _id: req.body.usertochatId })];
+                case 0:
+                    _a.trys.push([0, 6, , 7]);
+                    return [4 /*yield*/, user_model_1["default"].findOne({ _id: req.body.usertochatId })];
                 case 1:
                     usertochat = _a.sent();
                     return [4 /*yield*/, room_model_1["default"].findOne({ type: 'dual', users: [usertochat._id, req.body.user._id] })];
@@ -61,16 +63,23 @@ var checkRoom = function () {
                                 usertochat._id,
                                 req.body.user._id
                             ]
-                        })
-                        // TODO: redirect with room id
-                    ];
+                        })];
                 case 3:
-                    room_new = _a.sent();
+                    room = _a.sent();
                     return [3 /*break*/, 5];
                 case 4:
                     console.log('room exist');
                     _a.label = 5;
-                case 5: return [2 /*return*/];
+                case 5:
+                    req.body.room = room;
+                    next();
+                    return [3 /*break*/, 7];
+                case 6:
+                    err_1 = _a.sent();
+                    req.flash('err', 'Something went wrong!');
+                    res.redirect('/chat/');
+                    return [3 /*break*/, 7];
+                case 7: return [2 /*return*/];
             }
         });
     }); };
