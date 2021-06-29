@@ -39,8 +39,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.findRoom = exports.createRoom = void 0;
+exports.verifyToken = exports.findRoom = exports.createRoom = void 0;
 var room_model_1 = __importDefault(require("../models/room.model"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var user_service_1 = require("../services/user.service");
 var createRoom = function (roomBody) { return __awaiter(void 0, void 0, void 0, function () {
     var room;
     return __generator(this, function (_a) {
@@ -65,4 +67,38 @@ var findRoom = function (roomId, userId) { return __awaiter(void 0, void 0, void
     });
 }); };
 exports.findRoom = findRoom;
+var verifyToken = function (token) { return __awaiter(void 0, void 0, void 0, function () {
+    var decoded, user, room, err_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                if (!token) {
+                    throw "Invalid Token";
+                }
+                decoded = jsonwebtoken_1["default"].verify(token, process.env.JWT_SECRET);
+                return [4 /*yield*/, user_service_1.findUser(decoded.user._id)];
+            case 1:
+                user = _a.sent();
+                if (!user) {
+                    throw "User doesnt Exist";
+                }
+                return [4 /*yield*/, exports.findRoom(decoded.room._id, decoded.user._id)];
+            case 2:
+                room = _a.sent();
+                if (!room) {
+                    throw "Room doesnt Exist";
+                }
+                return [2 /*return*/, {
+                        user: user,
+                        room: room
+                    }];
+            case 3:
+                err_1 = _a.sent();
+                throw "Error: " + err_1;
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.verifyToken = verifyToken;
 //# sourceMappingURL=chat.service.js.map

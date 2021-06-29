@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { allUsers,findUser } from "../services/user.service";
-import { findRoom } from "../services/chat.service";
+import { allUsers} from "../services/user.service";
 
 const expiry_length = parseInt(process.env.EXPIRY) * 86400;
 const jwt_headers = {
@@ -21,31 +20,7 @@ export const roomHandler = async (req: any, res: any) => {
     process.env.JWT_SECRET,
     jwt_headers
   );
+  const roomName=req.body.room.name;
   res.send("Chat begin!!");
+  res.render('chats/chat',{ isnewRoom,jwtToken,roomName });
 };
-
-export const verifyToken=async(req:any,res:any)=>{
-  try
-  {
-    let token=req.body.jwtToken;
-    if(!token){
-      throw "Invalid Token";
-    }
-    let decoded = jwt.verify(token, process.env.JWT_SECRET);
-    let user=await findUser(decoded.user._id);
-    if(!user){
-      throw "User doesnt Exist"
-    }
-    let room=await findRoom(decoded.room._id,decoded.user._id);
-    if(!room){
-      throw "Room doesnt Exist";
-    }
-    return{
-      user:user,
-      room:room
-    }
-  }
-  catch(err){
-    throw `Error: ${err}`;
-  }
-}

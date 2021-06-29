@@ -14,6 +14,7 @@ import {
   userLeave,
   getRoomUsers,
 } from "./utils/users";
+import { verifyToken } from "./services/chat.service";
 import userRouter from "./routes/users.route";
 import chatRouter from "./routes/chat.route";
 
@@ -67,7 +68,8 @@ mongoose.connection.once("open", () =>
 );
 
 io.on("connection", (socket) => {
-  socket.on("joinRoom", ({ username, room }) => {
+  socket.on("joinRoom", (jwtToken) => {
+    let username="",room="";
     const user = userJoin(socket.id, username, room);
     socket.join(user.room);
 
@@ -80,10 +82,10 @@ io.on("connection", (socket) => {
         formatMessage(botName, `${user.username} has joined the chat`)
       );
 
-    io.to(user.room).emit("roomUsers", {
-      room: user.room,
-      users: getRoomUsers(user.room),
-    });
+    // io.to(user.room).emit("roomUsers", {
+    //   room: user.room,
+    //   users: getRoomUsers(user.room),
+    // });
   });
 
   socket.on("chatMessage", (msg) => {
@@ -92,31 +94,22 @@ io.on("connection", (socket) => {
     io.to(user.room).emit("message", formatMessage(user.username, msg));
   });
 
-  socket.on("disconnect", () => {
-    const user: any = userLeave(socket.id);
+  // socket.on("disconnect", () => {
+  //   const user: any = userLeave(socket.id);
 
-    if (user) {
-      io.to(user.room).emit(
-        "message",
-        formatMessage(botName, `${user.username} has left the chat`)
-      );
+  //   if (user) {
+  //     io.to(user.room).emit(
+  //       "message",
+  //       formatMessage(botName, `${user.username} has left the chat`)
+  //     );
 
-      io.to(user.room).emit("roomUsers", {
-        room: user.room,
-        users: getRoomUsers(user.room),
-      });
-    }
-  });
+  //     io.to(user.room).emit("roomUsers", {
+  //       room: user.room,
+  //       users: getRoomUsers(user.room),
+  //     });
+  //   }
+  // });
 });
-
-// app.get("/", (req: any, res: any) => {
-//   res.render("index");
-// });
-
-// app.get("/chat", (req: any, res: any) => {
-//   var { username, room } = req.query;
-//   res.render("chat", { username, room });
-// });
 
 app.use("/users", userRouter);
 

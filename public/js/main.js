@@ -5,12 +5,12 @@ const userList = document.getElementById("users");
 
 const socket = io();
 
-socket.emit("joinRoom", { username, room });
+socket.emit("joinRoom", jwtToken);
 
-socket.on("roomUsers", ({ room, users }) => {
-  outputRoomName(room);
-  outputUsers(users);
-});
+// socket.on("roomUsers", (jwtToken) => {
+//   outputRoomName(room);
+//   outputUsers(users);
+// });
 
 socket.on("message", (message) => {
   console.log(message);
