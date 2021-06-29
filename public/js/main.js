@@ -19,6 +19,14 @@ socket.on("message", (message) => {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
+socket.on("error",(err)=>{
+  iziToast.error({
+    title: 'Error!',
+    message:err,
+  });
+  console.log(err);
+})
+
 chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
 

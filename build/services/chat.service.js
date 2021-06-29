@@ -55,11 +55,11 @@ var createRoom = function (roomBody) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.createRoom = createRoom;
-var findRoom = function (roomId, userId) { return __awaiter(void 0, void 0, void 0, function () {
+var findRoom = function (roomId) { return __awaiter(void 0, void 0, void 0, function () {
     var room;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, room_model_1["default"].findOne({ _id: roomId, users: [userId] })];
+            case 0: return [4 /*yield*/, room_model_1["default"].findOne({ _id: roomId })];
             case 1:
                 room = _a.sent();
                 return [2 /*return*/, room];
@@ -83,10 +83,10 @@ var verifyToken = function (token) { return __awaiter(void 0, void 0, void 0, fu
                 if (!user) {
                     throw "User doesnt Exist";
                 }
-                return [4 /*yield*/, exports.findRoom(decoded.room._id, decoded.user._id)];
+                return [4 /*yield*/, exports.findRoom(decoded.room._id)];
             case 2:
                 room = _a.sent();
-                if (!room) {
+                if (Object.keys(room).length === 0 && room.users.includes(user._id)) {
                     throw "Room doesnt Exist";
                 }
                 return [2 /*return*/, {

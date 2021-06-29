@@ -67,20 +67,27 @@ mongoose.connection.once("open", () =>
   console.log("Connected to MongoDB successfully.")
 );
 
-io.on("connection", (socket) => {
-  socket.on("joinRoom", (jwtToken) => {
-    let username="",room="";
-    const user = userJoin(socket.id, username, room);
-    socket.join(user.room);
+io.on("connection", async(socket) => {
+  socket.on("joinRoom", async(jwtToken) => {
+    try{
+      const {user,room}=await verifyToken(jwtToken);
+    }
+    catch(err){
+      socket.emit("error",err);
+    }
+    
+    // let username="",room="";
+    // const user = userJoin(socket.id, username, room);
+    // socket.join(user.room);
 
-    socket.emit("message", formatMessage(botName, "Welcome to Chatversity!"));
+    // socket.emit("message", formatMessage(botName, "Welcome to Chatversity!"));
 
-    socket.broadcast
-      .to(user.room)
-      .emit(
-        "message",
-        formatMessage(botName, `${user.username} has joined the chat`)
-      );
+    // socket.broadcast
+    //   .to(user.room)
+    //   .emit(
+    //     "message",
+    //     formatMessage(botName, `${user.username} has joined the chat`)
+    //   );
 
     // io.to(user.room).emit("roomUsers", {
     //   room: user.room,
@@ -88,11 +95,11 @@ io.on("connection", (socket) => {
     // });
   });
 
-  socket.on("chatMessage", (msg) => {
-    const user = getCurrentUser(socket.id);
+  // socket.on("chatMessage", (msg) => {
+  //   const user = getCurrentUser(socket.id);
 
-    io.to(user.room).emit("message", formatMessage(user.username, msg));
-  });
+  //   io.to(user.room).emit("message", formatMessage(user.username, msg));
+  // });
 
   // socket.on("disconnect", () => {
   //   const user: any = userLeave(socket.id);

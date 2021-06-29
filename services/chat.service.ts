@@ -7,8 +7,8 @@ export const createRoom = async (roomBody:any) => {
   return room;
 };
 
-export const findRoom=async(roomId:any,userId:any)=>{
-  let room = await Room.findOne({_id:roomId,users:[userId]})
+export const findRoom=async(roomId:any)=>{
+  let room = await Room.findOne({_id:roomId})
   return room;
 }
 
@@ -23,8 +23,8 @@ export const verifyToken=async(token:any)=>{
     if(!user){
       throw "User doesnt Exist"
     }
-    let room=await findRoom(decoded.room._id,decoded.user._id);
-    if(!room){
+    let room:any=await findRoom(decoded.room._id);
+    if(Object.keys(room).length===0 && room.users.includes(user._id)){
       throw "Room doesnt Exist";
     }
     return{

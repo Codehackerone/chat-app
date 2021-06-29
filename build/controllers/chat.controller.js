@@ -42,10 +42,10 @@ exports.__esModule = true;
 exports.roomHandler = exports.renderIndex = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var user_service_1 = require("../services/user.service");
-var expiry_length = parseInt(process.env.EXPIRY) * 86400;
+var expiry_length = Number(process.env.EXPIRY) * 86400;
 var jwt_headers = {
     algorithm: 'HS256',
-    expiresIn: expiry_length
+    expiresIn: 1000 * 86400
 };
 var renderIndex = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var users, currentUser;
@@ -65,9 +65,8 @@ var roomHandler = function (req, res) { return __awaiter(void 0, void 0, void 0,
     var isnewRoom, jwtToken, roomName;
     return __generator(this, function (_a) {
         isnewRoom = (req.body.room["new"]) ? true : false;
-        jwtToken = jsonwebtoken_1["default"].sign({ user: req.body.user, room: req.body.room }, process.env.JWT_SECRET, jwt_headers);
+        jwtToken = jsonwebtoken_1["default"].sign({ user: req.body.user, room: req.body.room, usertochat: req.body.usertochat }, process.env.JWT_SECRET, jwt_headers);
         roomName = req.body.room.name;
-        res.send("Chat begin!!");
         res.render('chats/chat', { isnewRoom: isnewRoom, jwtToken: jwtToken, roomName: roomName });
         return [2 /*return*/];
     });
