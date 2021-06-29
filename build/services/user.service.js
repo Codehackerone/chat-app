@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.ifUsernameExist = exports.updateGoogleUser = exports.addGoogleUser = exports.checkGoogleUser = exports.allUsers = void 0;
+exports.findUser = exports.ifUsernameExist = exports.updateGoogleUser = exports.addGoogleUser = exports.checkGoogleUser = exports.allUsers = void 0;
 var user_model_1 = __importDefault(require("../models/user.model"));
 var allUsers = function () { return __awaiter(void 0, void 0, void 0, function () {
     var users;
@@ -101,4 +101,16 @@ var ifUsernameExist = function (username) { return __awaiter(void 0, void 0, voi
     });
 }); };
 exports.ifUsernameExist = ifUsernameExist;
+var findUser = function (userId) { return __awaiter(void 0, void 0, void 0, function () {
+    var user;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, user_model_1["default"].findById(userId)];
+            case 1:
+                user = _a.sent();
+                return [2 /*return*/, user];
+        }
+    });
+}); };
+exports.findUser = findUser;
 //# sourceMappingURL=user.service.js.map

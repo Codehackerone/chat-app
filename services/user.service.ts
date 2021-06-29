@@ -24,3 +24,8 @@ export const ifUsernameExist = async (username) => {
   let user = await Users.findOne({ username: username });
   return user ? true : false;
 };
+
+export const findUser=async(userId)=>{
+  let user = await Users.findById(userId);
+  return user;
+}

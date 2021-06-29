@@ -39,9 +39,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.roomHandler = exports.renderIndex = void 0;
+exports.verifyToken = exports.roomHandler = exports.renderIndex = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var user_service_1 = require("../services/user.service");
+var chat_service_1 = require("../services/chat.service");
 var expiry_length = parseInt(process.env.EXPIRY) * 86400;
 var jwt_headers = {
     algorithm: 'HS256',
@@ -65,10 +66,45 @@ var roomHandler = function (req, res) { return __awaiter(void 0, void 0, void 0,
     var isnewRoom, jwtToken;
     return __generator(this, function (_a) {
         isnewRoom = (req.body.room["new"]) ? true : false;
-        jwtToken = jsonwebtoken_1["default"].sign({ room: req.body.room, usertochat: req.body.usertochat }, process.env.JWT_SECRET, jwt_headers);
+        jwtToken = jsonwebtoken_1["default"].sign({ user: req.body.user, room: req.body.room }, process.env.JWT_SECRET, jwt_headers);
         res.send("Chat begin!!");
         return [2 /*return*/];
     });
 }); };
 exports.roomHandler = roomHandler;
+var verifyToken = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var token, decoded, user, room, err_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                token = req.body.jwtToken;
+                if (!token) {
+                    throw "Invalid Token";
+                }
+                decoded = jsonwebtoken_1["default"].verify(token, process.env.JWT_SECRET);
+                return [4 /*yield*/, user_service_1.findUser(decoded.user._id)];
+            case 1:
+                user = _a.sent();
+                if (!user) {
+                    throw "User doesnt Exist";
+                }
+                return [4 /*yield*/, chat_service_1.findRoom(decoded.room._id, decoded.user._id)];
+            case 2:
+                room = _a.sent();
+                if (!room) {
+                    throw "Room doesnt Exist";
+                }
+                return [2 /*return*/, {
+                        user: user,
+                        room: room
+                    }];
+            case 3:
+                err_1 = _a.sent();
+                throw "Error: " + err_1;
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.verifyToken = verifyToken;
 //# sourceMappingURL=chat.controller.js.map
