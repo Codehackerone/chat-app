@@ -31,7 +31,7 @@
 					</div>
 					<div class="form-control">
 						<label for="room">Room</label>
-						<select name="usertochatId" id="room">
+						<select name="usertochatId" id="room" class="form-select block w-full mt-1">
 							<% for(let user of users) { if(user._id===currentUser._id)continue; %> 
 								<option value="<%=user._id%>"><%=user.username%></option>
 							<% } %> 
