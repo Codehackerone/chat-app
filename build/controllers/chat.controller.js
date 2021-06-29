@@ -35,9 +35,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 exports.roomHandler = exports.renderIndex = void 0;
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var user_service_1 = require("../services/user.service");
+var expiry_length = parseInt(process.env.EXPIRY) * 86400;
+var jwt_headers = {
+    algorithm: 'HS256',
+    expiresIn: expiry_length
+};
 var renderIndex = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var users, currentUser;
     return __generator(this, function (_a) {
@@ -53,10 +62,10 @@ var renderIndex = function (req, res) { return __awaiter(void 0, void 0, void 0,
 }); };
 exports.renderIndex = renderIndex;
 var roomHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var isnewRoom, jwtToken;
     return __generator(this, function (_a) {
-        if (req.body.room["new"]) {
-            req.flash("success", "Welcome to direct chatting with " + req.body.usertochat.username);
-        }
+        isnewRoom = (req.body.room["new"]) ? true : false;
+        jwtToken = jsonwebtoken_1["default"].sign({ room: req.body.room, usertochat: req.body.usertochat }, process.env.JWT_SECRET, jwt_headers);
         res.send("Chat begin!!");
         return [2 /*return*/];
     });
