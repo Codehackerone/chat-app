@@ -7,7 +7,7 @@ export const createOrFetchRoom = () => {
       let usertochat: any = await User.findOne({ _id: req.body.usertochatId });
       let room: any = await Room.findOne({
         type: "dual",
-        users: [usertochat._id, req.body.user._id],
+        $or: [ { users: [usertochat._id, req.body.user._id] },{ users: [req.body.user._id,usertochat._id ] } ]
       });
       if (!room) {
         room = await Room.create({

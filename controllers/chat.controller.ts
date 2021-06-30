@@ -16,7 +16,7 @@ export const renderIndex = async (req: any, res: any) => {
 export const roomHandler = async (req: any, res: any) => {
   const isnewRoom=(req.body.room.new)?true:false;
   const jwtToken = jwt.sign(
-    { user:req.body.user, room: req.body.room, usertochat:req.body.usertochat},
+    { user:req.body.user, room: req.body.room},
     process.env.JWT_SECRET,
     jwt_headers
   );

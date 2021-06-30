@@ -48,6 +48,7 @@ var socket_io_1 = require("socket.io");
 var mongoose_1 = __importDefault(require("mongoose"));
 var express_session_1 = __importDefault(require("express-session"));
 var express_flash_1 = __importDefault(require("express-flash"));
+var messages_1 = require("./utils/messages");
 var chat_service_1 = require("./services/chat.service");
 var users_route_1 = __importDefault(require("./routes/users.route"));
 var chat_route_1 = __importDefault(require("./routes/chat.route"));
@@ -96,20 +97,30 @@ mongoose_1["default"].connection.once("open", function () {
 io.on("connection", function (socket) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         socket.on("joinRoom", function (jwtToken) { return __awaiter(void 0, void 0, void 0, function () {
-            var _a, user, room, err_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var decoded, room, user, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b.trys.push([0, 2, , 3]);
+                        _a.trys.push([0, 3, , 4]);
                         return [4 /*yield*/, chat_service_1.verifyToken(jwtToken)];
                     case 1:
-                        _a = _b.sent(), user = _a.user, room = _a.room;
-                        return [3 /*break*/, 3];
+                        decoded = _a.sent();
+                        room = decoded.room;
+                        user = decoded.user;
+                        return [4 /*yield*/, socket.join(String(room._id))];
                     case 2:
-                        err_1 = _b.sent();
+                        _a.sent();
+                        socket.emit("message", messages_1.formatMessage(botName, "Welcome to Chatversity!"));
+                        socket.broadcast
+                            .to(String(room._id))
+                            .emit("message", messages_1.formatMessage(botName, user.username + " has joined the chat"));
+                        console.log(socket.rooms);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        err_1 = _a.sent();
                         socket.emit("error", err_1);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         }); });

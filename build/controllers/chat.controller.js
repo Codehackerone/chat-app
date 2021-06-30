@@ -65,7 +65,7 @@ var roomHandler = function (req, res) { return __awaiter(void 0, void 0, void 0,
     var isnewRoom, jwtToken, roomName;
     return __generator(this, function (_a) {
         isnewRoom = (req.body.room["new"]) ? true : false;
-        jwtToken = jsonwebtoken_1["default"].sign({ user: req.body.user, room: req.body.room, usertochat: req.body.usertochat }, process.env.JWT_SECRET, jwt_headers);
+        jwtToken = jsonwebtoken_1["default"].sign({ user: req.body.user, room: req.body.room }, process.env.JWT_SECRET, jwt_headers);
         roomName = req.body.room.name;
         res.render('chats/chat', { isnewRoom: isnewRoom, jwtToken: jwtToken, roomName: roomName });
         return [2 /*return*/];

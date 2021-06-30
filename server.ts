@@ -70,24 +70,21 @@ mongoose.connection.once("open", () =>
 io.on("connection", async(socket) => {
   socket.on("joinRoom", async(jwtToken) => {
     try{
-      const {user,room}=await verifyToken(jwtToken);
+      const decoded=await verifyToken(jwtToken);
+      const room:any=decoded.room;
+      const user:any=decoded.user; 
+      await socket.join(String(room._id));
+      socket.emit("message", formatMessage(botName, "Welcome to Chatversity!"));
+      socket.broadcast
+        .to(String(room._id))
+        .emit(
+          "message",
+          formatMessage(botName, `${user.username} has joined the chat`)
+        );
     }
     catch(err){
       socket.emit("error",err);
     }
-    
-    // let username="",room="";
-    // const user = userJoin(socket.id, username, room);
-    // socket.join(user.room);
-
-    // socket.emit("message", formatMessage(botName, "Welcome to Chatversity!"));
-
-    // socket.broadcast
-    //   .to(user.room)
-    //   .emit(
-    //     "message",
-    //     formatMessage(botName, `${user.username} has joined the chat`)
-    //   );
 
     // io.to(user.room).emit("roomUsers", {
     //   room: user.room,

@@ -54,7 +54,7 @@ var createOrFetchRoom = function () {
                     usertochat = _a.sent();
                     return [4 /*yield*/, room_model_1["default"].findOne({
                             type: "dual",
-                            users: [usertochat._id, req.body.user._id]
+                            $or: [{ users: [usertochat._id, req.body.user._id] }, { users: [req.body.user._id, usertochat._id] }]
                         })];
                 case 2:
                     room = _a.sent();
