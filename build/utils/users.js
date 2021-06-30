@@ -3,7 +3,7 @@ exports.__esModule = true;
 exports.getRoomUsers = exports.userLeave = exports.getCurrentUser = exports.userJoin = void 0;
 var users = [];
 var userJoin = function (socket_id, username, room_id) {
-    var user = { socket_id: socket_id, username: username, room_id: room_id };
+    var user = { socket_id: socket_id, username: username, room_id: "" + room_id };
     users.push(user);
     return user;
 };
@@ -20,7 +20,7 @@ var userLeave = function (socket_id) {
 };
 exports.userLeave = userLeave;
 var getRoomUsers = function (room_id) {
-    return users.filter(function (user) { return user.room_id === room_id; });
+    return users.filter(function (user) { return user.room_id === String(room_id); });
 };
 exports.getRoomUsers = getRoomUsers;
 //# sourceMappingURL=users.js.map

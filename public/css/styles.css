@@ -188,3 +188,24 @@ a {
     display: none;
   }
 }
+
+
+.tel-online {
+  width: 7.5px;
+  height: 7.5px;
+  margin-top: -12.5px;
+  background: #00a312;
+  position: absolute;
+  border: 1px solid white;  
+  border-radius:50% 50%;
+}
+
+.tel-offline{
+  width: 7.5px;
+  height: 7.5px;
+  margin-top: -12.5px;
+  background: #e6e9ff;
+  position: absolute;
+  border: 1px solid white;  
+  border-radius:50% 50%;
+}

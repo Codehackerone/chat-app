@@ -82,22 +82,20 @@ io.on("connection", async(socket) => {
           "message",
           formatMessage(botName, `${user.username} has joined the chat`)
         );
+      io.to(String(room._id)).emit("roomUsers", {
+        room: room._id,
+        users: getRoomUsers(room._id),
+    });
     }
     catch(err){
       socket.emit("error",err);
     }
-
-    // io.to(user.room).emit("roomUsers", {
-    //   room: user.room,
-    //   users: getRoomUsers(user.room),
-    // });
   });
 
-  // socket.on("chatMessage", (msg) => {
-  //   const user = getCurrentUser(socket.id);
-
-  //   io.to(user.room).emit("message", formatMessage(user.username, msg));
-  // });
+  socket.on("chatMessage", (msg) => {
+    const user = getCurrentUser(socket.id);
+    io.to(user.room_id).emit("message", formatMessage(user.username, msg));
+  });
 
   socket.on("disconnect", () => {
     const user: any = userLeave(socket.id);
@@ -106,10 +104,10 @@ io.on("connection", async(socket) => {
         "message",
         formatMessage(botName, `${user.username} has left the chat`)
       );
-      // io.to(user.room).emit("roomUsers", {
-      //   room: user.room,
-      //   users: getRoomUsers(user.room),
-      // });
+      io.to(String(user.room_id)).emit("roomUsers", {
+        room: user.room_id,
+        users: getRoomUsers(user.room_id),
+      });
     }
   });
 });

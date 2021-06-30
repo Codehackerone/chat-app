@@ -116,6 +116,10 @@ io.on("connection", function (socket) { return __awaiter(void 0, void 0, void 0,
                         socket.broadcast
                             .to(String(room._id))
                             .emit("message", messages_1.formatMessage(botName, user.username + " has joined the chat"));
+                        io.to(String(room._id)).emit("roomUsers", {
+                            room: room._id,
+                            users: users_1.getRoomUsers(room._id)
+                        });
                         return [3 /*break*/, 4];
                     case 3:
                         err_1 = _a.sent();
@@ -125,18 +129,18 @@ io.on("connection", function (socket) { return __awaiter(void 0, void 0, void 0,
                 }
             });
         }); });
-        // socket.on("chatMessage", (msg) => {
-        //   const user = getCurrentUser(socket.id);
-        //   io.to(user.room).emit("message", formatMessage(user.username, msg));
-        // });
+        socket.on("chatMessage", function (msg) {
+            var user = users_1.getCurrentUser(socket.id);
+            io.to(user.room_id).emit("message", messages_1.formatMessage(user.username, msg));
+        });
         socket.on("disconnect", function () {
             var user = users_1.userLeave(socket.id);
             if (user) {
                 io.to(String(user.room_id)).emit("message", messages_1.formatMessage(botName, user.username + " has left the chat"));
-                // io.to(user.room).emit("roomUsers", {
-                //   room: user.room,
-                //   users: getRoomUsers(user.room),
-                // });
+                io.to(String(user.room_id)).emit("roomUsers", {
+                    room: user.room_id,
+                    users: users_1.getRoomUsers(user.room_id)
+                });
             }
         });
         return [2 /*return*/];

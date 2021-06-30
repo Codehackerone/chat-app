@@ -1,7 +1,7 @@
 const users = [];
 
 export const userJoin = (socket_id:string, username:string, room_id:string) => {
-  const user = { socket_id, username, room_id };
+  const user = { socket_id, username, room_id:`${room_id}` };
   users.push(user);
   return user;
 };
@@ -18,5 +18,5 @@ export const userLeave = (socket_id:string) => {
 };
 
 export const getRoomUsers = (room_id:string) => {
-  return users.filter((user) => user.room_id === room_id);
+  return users.filter((user) => user.room_id === String(room_id));
 };

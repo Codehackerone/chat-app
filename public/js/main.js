@@ -10,10 +10,10 @@ socket.emit("joinRoom", jwtToken);
 outputRoomName(room_name);
 outputUsers(usernames);
 
-// socket.on("roomUsers", (jwtToken) => {
-//   outputRoomName(room);
-//   outputUsers(users);
-// });
+socket.on("roomUsers", (users) => {
+  outputUsers(usernames);
+  changeStatus(users.users);
+});
 
 socket.on("message", (message) => {
   console.log(message);
@@ -59,6 +59,11 @@ function outputRoomName(room) {
 
 function outputUsers(users) {
   userList.innerHTML = `
-		${users.map((user) => `<li>${user}</li>`).join("")}
-		`;
+		${users.map((user) => `<li>&nbsp;&nbsp;&nbsp;${user}<div id="${user}-status" class="tel-offline"></div></li>`).join("")}`;
+}
+
+function changeStatus(users){
+  for(let user of users){
+    document.getElementById(`${user.username}-status`).className="tel-online";
+  }
 }
