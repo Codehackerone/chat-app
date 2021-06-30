@@ -76,12 +76,12 @@ io.on("connection", async(socket) => {
       await socket.join(String(room._id));
       userJoin(socket.id,user.username,room._id);
       socket.emit("message", formatMessage(botName, "Welcome to Chatversity!"));
-      socket.broadcast
-        .to(String(room._id))
-        .emit(
-          "message",
-          formatMessage(botName, `${user.username} has joined the chat`)
-        );
+      // socket.broadcast
+      //   .to(String(room._id))
+      //   .emit(
+      //     "message",
+      //     formatMessage(botName, `${user.username} has joined the chat`)
+      //   );
       io.to(String(room._id)).emit("roomUsers", {
         room: room._id,
         users: getRoomUsers(room._id),
@@ -100,10 +100,10 @@ io.on("connection", async(socket) => {
   socket.on("disconnect", () => {
     const user: any = userLeave(socket.id);
     if (user) {
-      io.to(String(user.room_id)).emit(
-        "message",
-        formatMessage(botName, `${user.username} has left the chat`)
-      );
+      // io.to(String(user.room_id)).emit(
+      //   "message",
+      //   formatMessage(botName, `${user.username} has left the chat`)
+      // );
       io.to(String(user.room_id)).emit("roomUsers", {
         room: user.room_id,
         users: getRoomUsers(user.room_id),

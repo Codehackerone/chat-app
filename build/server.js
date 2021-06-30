@@ -113,9 +113,12 @@ io.on("connection", function (socket) { return __awaiter(void 0, void 0, void 0,
                         _a.sent();
                         users_1.userJoin(socket.id, user.username, room._id);
                         socket.emit("message", messages_1.formatMessage(botName, "Welcome to Chatversity!"));
-                        socket.broadcast
-                            .to(String(room._id))
-                            .emit("message", messages_1.formatMessage(botName, user.username + " has joined the chat"));
+                        // socket.broadcast
+                        //   .to(String(room._id))
+                        //   .emit(
+                        //     "message",
+                        //     formatMessage(botName, `${user.username} has joined the chat`)
+                        //   );
                         io.to(String(room._id)).emit("roomUsers", {
                             room: room._id,
                             users: users_1.getRoomUsers(room._id)
@@ -136,7 +139,10 @@ io.on("connection", function (socket) { return __awaiter(void 0, void 0, void 0,
         socket.on("disconnect", function () {
             var user = users_1.userLeave(socket.id);
             if (user) {
-                io.to(String(user.room_id)).emit("message", messages_1.formatMessage(botName, user.username + " has left the chat"));
+                // io.to(String(user.room_id)).emit(
+                //   "message",
+                //   formatMessage(botName, `${user.username} has left the chat`)
+                // );
                 io.to(String(user.room_id)).emit("roomUsers", {
                     room: user.room_id,
                     users: users_1.getRoomUsers(user.room_id)

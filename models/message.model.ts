@@ -14,6 +14,10 @@ const messageSchema = new Schema(
     message:{
         type:String,
         required:true
+    },
+    time:{
+        type:String,
+        required:true
     }
     },
     {

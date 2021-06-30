@@ -9,7 +9,7 @@ var formatMessage = function (username, text) {
     return {
         username: username,
         text: text,
-        time: moment_1["default"]().format("h:mm a")
+        time: moment_1["default"]().format("h:mm a MMM YYYY")
     };
 };
 exports.formatMessage = formatMessage;
