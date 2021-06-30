@@ -39,66 +39,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.roomHandler = exports.renderIndex = void 0;
-var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var user_service_1 = require("../services/user.service");
-var message_service_1 = require("../services/message.service");
-var expiry_length = Number(process.env.EXPIRY) * 86400;
-var jwt_headers = {
-    algorithm: 'HS256',
-    expiresIn: 1000 * 86400
-};
-var renderIndex = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users, currentUser;
+exports.getMessageByRoom = exports.addMessage = void 0;
+var message_model_1 = __importDefault(require("../models/message.model"));
+var addMessage = function (messageBody) { return __awaiter(void 0, void 0, void 0, function () {
+    var err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user_service_1.allUsers()];
-            case 1:
-                users = _a.sent();
-                currentUser = req.body.user;
-                res.render("chats/index", { users: users, currentUser: currentUser });
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.renderIndex = renderIndex;
-var roomHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var isnewRoom, jwtToken, usernames, _i, _a, user_id, user, roomName, messages, err_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
             case 0:
-                _b.trys.push([0, 6, , 7]);
-                isnewRoom = (req.body.room["new"]) ? true : false;
-                jwtToken = jsonwebtoken_1["default"].sign({ user: req.body.user, room: req.body.room }, process.env.JWT_SECRET, jwt_headers);
-                usernames = [];
-                _i = 0, _a = req.body.room.users;
-                _b.label = 1;
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, message_model_1["default"].create(messageBody)];
             case 1:
-                if (!(_i < _a.length)) return [3 /*break*/, 4];
-                user_id = _a[_i];
-                return [4 /*yield*/, user_service_1.findUser(user_id)];
+                _a.sent();
+                return [3 /*break*/, 3];
             case 2:
-                user = _b.sent();
-                usernames.push(user.username);
-                _b.label = 3;
-            case 3:
-                _i++;
-                return [3 /*break*/, 1];
-            case 4:
-                roomName = req.body.room.name;
-                return [4 /*yield*/, message_service_1.getMessageByRoom(req.body.room._id)];
-            case 5:
-                messages = _b.sent();
-                res.render('chats/chat', { isnewRoom: isnewRoom, jwtToken: jwtToken, roomName: roomName, usernames: usernames, messages: messages });
-                return [3 /*break*/, 7];
-            case 6:
-                err_1 = _b.sent();
-                req.flash('err', "Error: " + err_1);
-                res.redirect('/chat/');
-                return [3 /*break*/, 7];
-            case 7: return [2 /*return*/];
+                err_1 = _a.sent();
+                console.log(err_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.roomHandler = roomHandler;
-//# sourceMappingURL=chat.controller.js.map
+exports.addMessage = addMessage;
+var getMessageByRoom = function (roomId) { return __awaiter(void 0, void 0, void 0, function () {
+    var messages;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, message_model_1["default"].find({ room_id: roomId })];
+            case 1:
+                messages = _a.sent();
+                return [2 /*return*/, messages];
+        }
+    });
+}); };
+exports.getMessageByRoom = getMessageByRoom;
+//# sourceMappingURL=message.service.js.map

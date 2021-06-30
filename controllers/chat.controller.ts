@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { allUsers,findUser } from "../services/user.service";
+import { getMessageByRoom } from "../services/message.service";
 
 const expiry_length = Number(process.env.EXPIRY) * 86400;
 const jwt_headers = {
@@ -27,7 +28,8 @@ export const roomHandler = async (req: any, res: any) => {
       usernames.push(user.username);
     }
     const roomName=req.body.room.name;
-    res.render('chats/chat',{ isnewRoom,jwtToken,roomName,usernames });
+    const messages=await getMessageByRoom(req.body.room._id);
+    res.render('chats/chat',{ isnewRoom,jwtToken,roomName,usernames,messages });
   }
   catch(err){
     req.flash('err',"Error: "+err);

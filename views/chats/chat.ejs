@@ -21,7 +21,14 @@
                 <h3><i class="fas fa-users"></i> Users</h3>
                 <ul id="users"></ul>
             </div>
-            <div class="chat-messages"></div>
+            <div class="chat-messages">
+                <% for(let msg of messages) {%>
+                    <div class="message">
+                        <p class="meta"><%=msg.username%> <span><%=msg.time%></span></p>
+                        <p class="text"><%=msg.message%></p>    
+                    </div>
+                <% }%>
+            </div>
         </main>
         <div class="chat-form-container">
             <form id="chat-form">

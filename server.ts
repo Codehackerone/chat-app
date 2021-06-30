@@ -77,7 +77,7 @@ io.on("connection", async(socket) => {
       const user:any=decoded.user; 
       await socket.join(String(room._id));
       userJoin(socket.id,user.username,room._id);
-      socket.emit("message", formatMessage(botName, "Welcome to Chatversity!"));
+      // socket.emit("message", formatMessage(botName, "Welcome to Chatversity!"));
       // socket.broadcast
       //   .to(String(room._id))
       //   .emit(

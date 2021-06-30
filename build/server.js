@@ -114,7 +114,7 @@ io.on("connection", function (socket) { return __awaiter(void 0, void 0, void 0,
                     case 2:
                         _a.sent();
                         users_1.userJoin(socket.id, user.username, room._id);
-                        socket.emit("message", messages_1.formatMessage(botName, "Welcome to Chatversity!"));
+                        // socket.emit("message", formatMessage(botName, "Welcome to Chatversity!"));
                         // socket.broadcast
                         //   .to(String(room._id))
                         //   .emit(
