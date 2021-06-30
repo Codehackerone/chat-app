@@ -49,6 +49,7 @@ var mongoose_1 = __importDefault(require("mongoose"));
 var express_session_1 = __importDefault(require("express-session"));
 var express_flash_1 = __importDefault(require("express-flash"));
 var messages_1 = require("./utils/messages");
+var users_1 = require("./utils/users");
 var chat_service_1 = require("./services/chat.service");
 var users_route_1 = __importDefault(require("./routes/users.route"));
 var chat_route_1 = __importDefault(require("./routes/chat.route"));
@@ -110,11 +111,11 @@ io.on("connection", function (socket) { return __awaiter(void 0, void 0, void 0,
                         return [4 /*yield*/, socket.join(String(room._id))];
                     case 2:
                         _a.sent();
+                        users_1.userJoin(socket.id, user.username, room._id);
                         socket.emit("message", messages_1.formatMessage(botName, "Welcome to Chatversity!"));
                         socket.broadcast
                             .to(String(room._id))
                             .emit("message", messages_1.formatMessage(botName, user.username + " has joined the chat"));
-                        console.log(socket.rooms);
                         return [3 /*break*/, 4];
                     case 3:
                         err_1 = _a.sent();
@@ -124,6 +125,20 @@ io.on("connection", function (socket) { return __awaiter(void 0, void 0, void 0,
                 }
             });
         }); });
+        // socket.on("chatMessage", (msg) => {
+        //   const user = getCurrentUser(socket.id);
+        //   io.to(user.room).emit("message", formatMessage(user.username, msg));
+        // });
+        socket.on("disconnect", function () {
+            var user = users_1.userLeave(socket.id);
+            if (user) {
+                io.to(String(user.room_id)).emit("message", messages_1.formatMessage(botName, user.username + " has left the chat"));
+                // io.to(user.room).emit("roomUsers", {
+                //   room: user.room,
+                //   users: getRoomUsers(user.room),
+                // });
+            }
+        });
         return [2 /*return*/];
     });
 }); });

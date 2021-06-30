@@ -74,6 +74,7 @@ io.on("connection", async(socket) => {
       const room:any=decoded.room;
       const user:any=decoded.user; 
       await socket.join(String(room._id));
+      userJoin(socket.id,user.username,room._id);
       socket.emit("message", formatMessage(botName, "Welcome to Chatversity!"));
       socket.broadcast
         .to(String(room._id))
@@ -98,21 +99,19 @@ io.on("connection", async(socket) => {
   //   io.to(user.room).emit("message", formatMessage(user.username, msg));
   // });
 
-  // socket.on("disconnect", () => {
-  //   const user: any = userLeave(socket.id);
-
-  //   if (user) {
-  //     io.to(user.room).emit(
-  //       "message",
-  //       formatMessage(botName, `${user.username} has left the chat`)
-  //     );
-
-  //     io.to(user.room).emit("roomUsers", {
-  //       room: user.room,
-  //       users: getRoomUsers(user.room),
-  //     });
-  //   }
-  // });
+  socket.on("disconnect", () => {
+    const user: any = userLeave(socket.id);
+    if (user) {
+      io.to(String(user.room_id)).emit(
+        "message",
+        formatMessage(botName, `${user.username} has left the chat`)
+      );
+      // io.to(user.room).emit("roomUsers", {
+      //   room: user.room,
+      //   users: getRoomUsers(user.room),
+      // });
+    }
+  });
 });
 
 app.use("/users", userRouter);
