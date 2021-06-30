@@ -17,6 +17,8 @@ import {
 import { verifyToken } from "./services/chat.service";
 import userRouter from "./routes/users.route";
 import chatRouter from "./routes/chat.route";
+import { addMessage } from "./services/message.service";
+import moment from "moment";
 
 config();
 const secret = process.env.SESSION_SECRET;
@@ -94,6 +96,12 @@ io.on("connection", async(socket) => {
 
   socket.on("chatMessage", (msg) => {
     const user = getCurrentUser(socket.id);
+    addMessage({
+      room_id:user.room_id,
+      username:user.username,
+      message:msg,
+      time:moment().format("h:mm a MMM YYYY")
+    })
     io.to(user.room_id).emit("message", formatMessage(user.username, msg));
   });
 

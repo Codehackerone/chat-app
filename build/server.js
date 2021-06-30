@@ -53,6 +53,8 @@ var users_1 = require("./utils/users");
 var chat_service_1 = require("./services/chat.service");
 var users_route_1 = __importDefault(require("./routes/users.route"));
 var chat_route_1 = __importDefault(require("./routes/chat.route"));
+var message_service_1 = require("./services/message.service");
+var moment_1 = __importDefault(require("moment"));
 dotenv_1.config();
 var secret = process.env.SESSION_SECRET;
 var sessionConfig = {
@@ -134,6 +136,12 @@ io.on("connection", function (socket) { return __awaiter(void 0, void 0, void 0,
         }); });
         socket.on("chatMessage", function (msg) {
             var user = users_1.getCurrentUser(socket.id);
+            message_service_1.addMessage({
+                room_id: user.room_id,
+                username: user.username,
+                message: msg,
+                time: moment_1["default"]().format("h:mm a MMM YYYY")
+            });
             io.to(user.room_id).emit("message", messages_1.formatMessage(user.username, msg));
         });
         socket.on("disconnect", function () {
