@@ -62,13 +62,38 @@ var renderIndex = function (req, res) { return __awaiter(void 0, void 0, void 0,
 }); };
 exports.renderIndex = renderIndex;
 var roomHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var isnewRoom, jwtToken, roomName;
-    return __generator(this, function (_a) {
-        isnewRoom = (req.body.room["new"]) ? true : false;
-        jwtToken = jsonwebtoken_1["default"].sign({ user: req.body.user, room: req.body.room }, process.env.JWT_SECRET, jwt_headers);
-        roomName = req.body.room.name;
-        res.render('chats/chat', { isnewRoom: isnewRoom, jwtToken: jwtToken, roomName: roomName });
-        return [2 /*return*/];
+    var isnewRoom, jwtToken, usernames, _i, _a, user_id, user, roomName, err_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 5, , 6]);
+                isnewRoom = (req.body.room["new"]) ? true : false;
+                jwtToken = jsonwebtoken_1["default"].sign({ user: req.body.user, room: req.body.room }, process.env.JWT_SECRET, jwt_headers);
+                usernames = [];
+                _i = 0, _a = req.body.room.users;
+                _b.label = 1;
+            case 1:
+                if (!(_i < _a.length)) return [3 /*break*/, 4];
+                user_id = _a[_i];
+                return [4 /*yield*/, user_service_1.findUser(user_id)];
+            case 2:
+                user = _b.sent();
+                usernames.push(user.username);
+                _b.label = 3;
+            case 3:
+                _i++;
+                return [3 /*break*/, 1];
+            case 4:
+                roomName = req.body.room.name;
+                res.render('chats/chat', { isnewRoom: isnewRoom, jwtToken: jwtToken, roomName: roomName, usernames: usernames });
+                return [3 /*break*/, 6];
+            case 5:
+                err_1 = _b.sent();
+                req.flash('err', "Error: " + err_1);
+                res.redirect('/chat/');
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
+        }
     });
 }); };
 exports.roomHandler = roomHandler;

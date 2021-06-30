@@ -7,6 +7,9 @@ const socket = io();
 
 socket.emit("joinRoom", jwtToken);
 
+outputRoomName(room_name);
+outputUsers(usernames);
+
 // socket.on("roomUsers", (jwtToken) => {
 //   outputRoomName(room);
 //   outputUsers(users);
@@ -56,6 +59,6 @@ function outputRoomName(room) {
 
 function outputUsers(users) {
   userList.innerHTML = `
-		${users.map((user) => `<li>${user.username}</li>`).join("")}
+		${users.map((user) => `<li>${user}</li>`).join("")}
 		`;
 }

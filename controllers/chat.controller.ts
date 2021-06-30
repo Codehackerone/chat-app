@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { allUsers} from "../services/user.service";
+import { allUsers,findUser } from "../services/user.service";
 
 const expiry_length = Number(process.env.EXPIRY) * 86400;
 const jwt_headers = {
@@ -14,12 +14,23 @@ export const renderIndex = async (req: any, res: any) => {
 };
 
 export const roomHandler = async (req: any, res: any) => {
-  const isnewRoom=(req.body.room.new)?true:false;
-  const jwtToken = jwt.sign(
-    { user:req.body.user, room: req.body.room},
-    process.env.JWT_SECRET,
-    jwt_headers
-  );
-  const roomName=req.body.room.name;
-  res.render('chats/chat',{ isnewRoom,jwtToken,roomName });
+  try{
+    const isnewRoom=(req.body.room.new)?true:false;
+    const jwtToken = jwt.sign(
+      { user:req.body.user, room: req.body.room},
+      process.env.JWT_SECRET,
+      jwt_headers
+    );
+    let usernames=[];
+    for(let user_id of req.body.room.users){
+      let user:any=await findUser(user_id);
+      usernames.push(user.username);
+    }
+    const roomName=req.body.room.name;
+    res.render('chats/chat',{ isnewRoom,jwtToken,roomName,usernames });
+  }
+  catch(err){
+    req.flash('err',"Error: "+err);
+    res.redirect('/chat/');
+  }
 };
