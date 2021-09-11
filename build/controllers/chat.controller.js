@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.roomHandler = exports.renderIndex = void 0;
+exports.renderTerminal = exports.roomHandler = exports.renderIndex = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var user_service_1 = require("../services/user.service");
 var message_service_1 = require("../services/message.service");
@@ -101,4 +101,11 @@ var roomHandler = function (req, res) { return __awaiter(void 0, void 0, void 0,
     });
 }); };
 exports.roomHandler = roomHandler;
+var renderTerminal = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        res.render('chats/terminal');
+        return [2 /*return*/];
+    });
+}); };
+exports.renderTerminal = renderTerminal;
 //# sourceMappingURL=chat.controller.js.map

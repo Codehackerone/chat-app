@@ -1,6 +1,6 @@
 import express from "express";
 import { authorize } from "../middlewares/auth.middleware";
-import { renderIndex, roomHandler } from "../controllers/chat.controller";
+import { renderIndex, renderTerminal, roomHandler } from "../controllers/chat.controller";
 import {
   createOrFetchRoom,
   roomChecker,
@@ -9,6 +9,8 @@ import {
 const Router = express.Router();
 
 Router.route("/").get(authorize(), renderIndex);
+
+Router.route("/terminal").get(authorize(), renderTerminal);
 
 Router.route("/chat").post(
   authorize(),
