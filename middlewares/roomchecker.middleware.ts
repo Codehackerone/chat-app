@@ -1,5 +1,6 @@
 import Room from "../models/room.model";
 import User from "../models/user.model";
+const crypto = require("crypto");
 
 export const createOrFetchRoom = () => {
   return async (req: any, res: any, next: any) => {
@@ -16,11 +17,33 @@ export const createOrFetchRoom = () => {
           users: [usertochat._id, req.body.user._id],
         });
         room.type = "new";
+        const user1 = crypto.getDiffieHellman("modp15");
+        const user2 = crypto.getDiffieHellman("modp15");
+        const user1PrivateKey = user1.generateKeys();
+        const user2PrivateKey = user2.generateKeys();
+        const user1PublicKey = user1.getPublicKey();
+        const user2PublicKey = user2.getPublicKey();
+        let userBody=req.body.user;
+        userBody.keys.push({
+          oppositeUsername: usertochat.username, 
+          privateKey: user1PrivateKey,
+          oppositePublicKey: user2PublicKey,
+        })
+        await User.findOneAndUpdate({ _id: req.body.user._id }, userBody);
+        let userToChatBody=usertochat;
+        userToChatBody.keys.push({
+          oppositeUsername: req.body.user.username,
+          privateKey: user2PrivateKey,
+          oppositePublicKey: user1PublicKey,
+        })
+        await User.findOneAndUpdate({ _id: usertochat._id }, userToChatBody);
       }
       req.body.room = room;
       req.body.usertochat = usertochat;
       next();
     } catch (err) {
+      console.log(err);
+      
       req.flash("err", "Something went wrong!");
       res.redirect("/chat/");
     }

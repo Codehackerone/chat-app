@@ -42,13 +42,14 @@ exports.__esModule = true;
 exports.roomChecker = exports.createOrFetchRoom = void 0;
 var room_model_1 = __importDefault(require("../models/room.model"));
 var user_model_1 = __importDefault(require("../models/user.model"));
+var crypto = require("crypto");
 var createOrFetchRoom = function () {
     return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-        var usertochat, room, err_1;
+        var usertochat, room, user1, user2, user1PrivateKey, user2PrivateKey, user1PublicKey, user2PublicKey, userBody, userToChatBody, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 5, , 6]);
+                    _a.trys.push([0, 7, , 8]);
                     return [4 /*yield*/, user_model_1["default"].findOne({ _id: req.body.usertochatId })];
                 case 1:
                     usertochat = _a.sent();
@@ -58,7 +59,7 @@ var createOrFetchRoom = function () {
                         })];
                 case 2:
                     room = _a.sent();
-                    if (!!room) return [3 /*break*/, 4];
+                    if (!!room) return [3 /*break*/, 6];
                     return [4 /*yield*/, room_model_1["default"].create({
                             name: usertochat.name + " and " + req.body.user.name,
                             type: "dual",
@@ -67,18 +68,43 @@ var createOrFetchRoom = function () {
                 case 3:
                     room = _a.sent();
                     room.type = "new";
-                    _a.label = 4;
+                    user1 = crypto.getDiffieHellman("modp15");
+                    user2 = crypto.getDiffieHellman("modp15");
+                    user1PrivateKey = user1.generateKeys();
+                    user2PrivateKey = user2.generateKeys();
+                    user1PublicKey = user1.getPublicKey();
+                    user2PublicKey = user2.getPublicKey();
+                    userBody = req.body.user;
+                    userBody.keys.push({
+                        oppositeUsername: usertochat.username,
+                        privateKey: user1PrivateKey,
+                        oppositePublicKey: user2PublicKey
+                    });
+                    return [4 /*yield*/, user_model_1["default"].findOneAndUpdate({ _id: req.body.user._id }, userBody)];
                 case 4:
+                    _a.sent();
+                    userToChatBody = usertochat;
+                    userToChatBody.keys.push({
+                        oppositeUsername: req.body.user.username,
+                        privateKey: user2PrivateKey,
+                        oppositePublicKey: user1PublicKey
+                    });
+                    return [4 /*yield*/, user_model_1["default"].findOneAndUpdate({ _id: usertochat._id }, userToChatBody)];
+                case 5:
+                    _a.sent();
+                    _a.label = 6;
+                case 6:
                     req.body.room = room;
                     req.body.usertochat = usertochat;
                     next();
-                    return [3 /*break*/, 6];
-                case 5:
+                    return [3 /*break*/, 8];
+                case 7:
                     err_1 = _a.sent();
+                    console.log(err_1);
                     req.flash("err", "Something went wrong!");
                     res.redirect("/chat/");
-                    return [3 /*break*/, 6];
-                case 6: return [2 /*return*/];
+                    return [3 /*break*/, 8];
+                case 8: return [2 /*return*/];
             }
         });
     }); };

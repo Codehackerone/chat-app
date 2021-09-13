@@ -36,6 +36,19 @@ const userSchema = new Schema({
     default: "reg_incomplete",
     enum: ["verified", "unverified", "banned", "reg_incomplete"],
   },
+  keys:[
+    {
+      oppositeUsername: {
+        type: String,
+      },
+      privateKey: {
+        type: String,
+      },
+      oppositePublicKey:{
+        type: String,
+      }
+    }
+  ]
 });
 
 let User = model("User", userSchema);

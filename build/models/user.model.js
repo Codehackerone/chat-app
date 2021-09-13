@@ -36,7 +36,20 @@ var userSchema = new mongoose_1.Schema({
         type: String,
         "default": "reg_incomplete",
         "enum": ["verified", "unverified", "banned", "reg_incomplete"]
-    }
+    },
+    keys: [
+        {
+            oppositeUsername: {
+                type: String
+            },
+            privateKey: {
+                type: String
+            },
+            oppositePublicKey: {
+                type: String
+            }
+        }
+    ]
 });
 var User = mongoose_1.model("User", userSchema);
 exports["default"] = User;

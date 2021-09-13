@@ -36,3 +36,7 @@ export const roomHandler = async (req: any, res: any) => {
     res.redirect('/chat/');
   }
 };
+
+export const renderTerminal=async(req:any,res:any)=>{
+  res.render('chats/terminal');
+}
