@@ -1,11 +1,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200&display=swap" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<%- include('../layouts/boilerplate.ejs') %> 
 <link rel="stylesheet" href="/css/terminal.css">
 <script src="/js/terminal.js"></script>
 <div id="terminalWrapper">
   <div id="terminal">
-    <div id="fileBar"><a class="btn" href="#">&#10005;</a><a class="btn stnd" href="#">&#9472;</a><a class="btn stnd" href="#">&#9723;</a><span>root@user:~</span></div>
-    <div id="terminalOutput"></div>
+    <div id="fileBar">
+      <a class="btn" href="#">&#10005;</a>
+      <a class="btn stnd" href="#">&#9472;</a>
+      <a class="btn stnd" href="#">&#9723;</a>
+      <span>root@user:~</span></div>
+      <div id="terminalOutput">
+      </div>
   </div>
 </div>
 <script>
