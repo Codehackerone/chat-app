@@ -1,13 +1,15 @@
-var commandListBasic = ["this", "room", "code", "help"];
+var commandListBasic = ["this", "room", "code", "help", "login", "register", "signout", "exit"];
 var roomCommands=["--join", "--new"];
 var roomCommands=["--set"];
 var commandsAdvanced = ["!help", "!leave"]
+var isLoggedIn = false;
 var isReadyToChat=false;
 var isCodeSet=false;
 var isRoomSet=false;
 var roomCode="";
 var codeValue="";
-var user = "root@localhost:~$";
+var user=":~$";
+//var user = "root@localhost:~$";
 var user2= "root@someoneelse:~$";
 var commandHistory = [];
 var commandIndex = -1;
@@ -63,8 +65,18 @@ $(document).ready(function () {
     );
   }
 
+  function checkLoggedIn(){
+    if(!isLoggedIn){
+      addError("Please login/register to continue");
+      addInput();
+      return false;
+    }
+    return true;
+  }
+
   function handleRoomCommand(secondary, tertiary){
     replaceInput();
+    if(!checkLoggedIn())return;
     if(!secondary){
       addError("Please enter a room attribute");
       addInput();
