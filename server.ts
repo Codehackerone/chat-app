@@ -17,6 +17,7 @@ import {
 import { verifyToken } from "./services/chat.service";
 import userRouter from "./routes/users.route";
 import chatRouter from "./routes/chat.route";
+import terminalRouter from "./routes/terminal.route";
 import { addMessage } from "./services/message.service";
 import moment from "moment";
 
@@ -123,6 +124,8 @@ io.on("connection", async(socket) => {
 app.use("/users", userRouter);
 
 app.use("/chat", chatRouter);
+
+app.use("/terminal", terminalRouter)
 
 app.all("*", (req, res) => {
   res.send("Sorry! Route not found");

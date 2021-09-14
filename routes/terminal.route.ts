@@ -3,10 +3,10 @@ import { handleLogin, handleRegister } from "../controllers/terminalUser.control
 
 const Router = express.Router();
 
-Router.route('/login')
+Router.route('/api/login')
     .post(handleLogin)
 
-Router.route('/register')
+Router.route('/api/register')
     .post(handleRegister)
 
 export default Router;
